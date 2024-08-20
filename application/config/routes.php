@@ -54,11 +54,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-
+//this is the how page.. if user write the limk www.api.com he will be here
 $route['default_controller'] = 'pages/view';
 
 
 
+$route['search'] = 'returner/search';
+
+//this is the route for the all items fetch.. followed by limit/offset
+$route['search/all/(:num)/(:num)'] = 'returner/get_all/$1/$2';
+//this is the search by type/name/limit/offset
+//usage example: api.com/search/p.id/1/10/0 will show the perfume with id no.1.. 10 items per page and from the first item
+$route['search/(:any)/(:any)/(:num)/(:num)'] = 'returner/search/$1/$2/$3/$4';
+//whatever is not matched in the above routes will be shown as a page.. if it is not there.. error404 will appear.. check the mentioned function if u need
 $route['(:any)'] = 'pages/view/$1';
 
 

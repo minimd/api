@@ -1,27 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+
 *{
     padding: 0;
     margin: 0;
 }
 
 body{
-    background-color: antiquewhite;
+display: flex;
+flex-direction: column;
+    align-items: center;
+    justify-content: baseline;
+    font-family: 'assistant', 'system-ui';
+    width: 100vw;
 
 }
 header{
-    width: 100%;
-    height: 100px;
-    background-color: aliceblue;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    height: 70px;
+    background-color: #333;
+    width: 100%;
+    color: #fff;
+
 }
-section.container{
+nav{
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 50px;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    height: auto;
+    height: 70px;
+    width: 60%;
+    color: #fff;
 }
+nav #search-div{
+
+    height: 100%;
+    width: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+nav input{
+    width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-right: 12px;
+}
+nav #search-icon{
+    width: 30px;
+    cursor: pointer;
+    background-color: #00000000;
+    border-radius: 50px;
+}
+section#hs{
+    width: 100vw;
+    margin-bottom: 50px;
+}
+div#search-info{
+    height: 80px;
+    width: 100%;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+section#container{
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: center;
+    width: 90%;
+    /* background-color: rgb(212, 212, 212); */
+    flex-wrap: wrap;
+    gap: 90px;
+}
+div.cart{
+    width: 200px;
+    height: auto;
+    background-color:antiquewhite;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+div.cart img{
+    border-radius: 12px;
+}
+div.cart button{
+border: none;
+border-radius: 8px;
+/* height: 28px; */
+background-color: #fff;
+font-size: 24px;
+font-family: 'assistant', 'system-ui';
+padding:3px ;
+}
+
