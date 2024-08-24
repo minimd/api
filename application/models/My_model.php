@@ -23,6 +23,7 @@ class My_model extends CI_Model
             p.perfumer,
             p.price,
             p.description,
+            p.tag,
             p.image_url AS perfume_image,
             p.created_at,
             p.top_notes,
@@ -32,19 +33,19 @@ class My_model extends CI_Model
             GROUP_CONCAT(DISTINCT CASE 
                 WHEN JSON_CONTAINS(p.top_notes, CAST(n.id AS JSON))
                 THEN n.name 
-            END ORDER BY n.name ASC SEPARATOR \', \') AS top_note_names,
+            END ORDER BY n.id ASC SEPARATOR \', \') AS top_note_names,
             GROUP_CONCAT(DISTINCT CASE 
                 WHEN JSON_CONTAINS(p.middle_notes, CAST(n.id AS JSON))
                 THEN n.name 
-            END ORDER BY n.name ASC SEPARATOR \', \') AS middle_note_names,
+            END ORDER BY n.id ASC SEPARATOR \', \') AS middle_note_names,
             GROUP_CONCAT(DISTINCT CASE 
                 WHEN JSON_CONTAINS(p.base_notes, CAST(n.id AS JSON))
                 THEN n.name 
-            END ORDER BY n.name ASC SEPARATOR \', \') AS base_note_names,
+            END ORDER BY n.id ASC SEPARATOR \', \') AS base_note_names,
             GROUP_CONCAT(DISTINCT CASE 
                 WHEN JSON_CONTAINS(p.all_notes, CAST(n.id AS JSON))
                 THEN n.name 
-            END ORDER BY n.name ASC SEPARATOR \', \') AS all_note_names
+            END ORDER BY n.id ASC SEPARATOR \', \') AS all_note_names
         ');
 
         // From and Join statements

@@ -9,10 +9,12 @@ class Pages extends CI_Controller {
                 show_404();
         }
 
-        $data['all']=$this->My_model->get_all('p.name','ORA');
+        $data['all']='sui';
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/second_header', $data);
         $this->load->view('pages/'.$page, $data);
+        $this->load->view('templates/second-footer', $data);
         $this->load->view('templates/footer', $data);
 }
 
