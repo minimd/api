@@ -62,7 +62,9 @@ $route['default_controller'] = 'pages/view';
 $route['search'] = 'returner/search';
 
 //this is the route for the all items fetch.. followed by limit/offset
-$route['search/all/(:num)/(:num)'] = 'returner/get_all/$1/$2';
+$route['search/all'] = 'returner/get_all';
+$route['get_all_brands'] = 'returner/get_brands';
+$route['get_all_notes'] = 'returner/get_notes';
 //this is the search by type/name/limit/offset
 //usage example: api.com/search/p.id/1/10/0 will show the perfume with id no.1.. 10 items per page and from the first item
 $route['search/(:any)/(:any)/(:num)/(:num)'] = 'returner/search/$1/$2/$3/$4';

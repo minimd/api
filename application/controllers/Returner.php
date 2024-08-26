@@ -30,16 +30,36 @@ class Returner extends CI_Controller
              ->set_output(json_encode($data));
     }
 
-    public function get_all( $limit, $offset)
+    public function get_all()
     {
         // Use the parameters to query your database.
-        $data = $this->My_model->get_all('all', '', $limit, $offset);
+        $data = $this->My_model->get_all();
         // print_r ($data);
         
         // Set the content type to JSON for the response
         $this->output
              ->set_content_type('application/json')
              ->set_output(json_encode($data));
+    }
+    public function get_brands(){
+                // Use the parameters to query your database.
+                $data = $this->My_model->get_brands();
+                // print_r ($data);
+                
+                // Set the content type to JSON for the response
+                $this->output
+                     ->set_content_type('application/json')
+                     ->set_output(json_encode($data));
+    }
+    public function get_notes(){
+                // Use the parameters to query your database.
+                $data = $this->My_model->get_notes();
+                // print_r ($data);
+                
+                // Set the content type to JSON for the response
+                $this->output
+                     ->set_content_type('application/json')
+                     ->set_output(json_encode($data));
     }
 
 
