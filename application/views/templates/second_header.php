@@ -5,7 +5,7 @@
            
             <h2 id="categories-nav">categories</h2>
         
-            <h2 id="best-sellers-nav">best sellers</h2>
+            <h2 id="best-sellers-nav">on sale</h2>
         
             <h2 id="new-arrivals-nav">new arrivals</h2>
         
