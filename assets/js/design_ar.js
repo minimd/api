@@ -1996,6 +1996,7 @@ function showCartScreen() {
                 <input type="tel" id="phone-number" name="phone-number" required pattern="[0-9]{11}">
             </div>
             <button type="submit">تثبيت الطلب</button>
+            <span id='refund'>*الاسترجاع للعطور المكسورة</span>
         </form>
     `;
 

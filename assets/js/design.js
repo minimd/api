@@ -121,13 +121,13 @@ $(".rares-key").click(function (e) {
 	showRarePerfumesScreen();
 });
 $("#new-arrivals-nav").click(function (e) {
-	showNewArrivalsScreen()
+	showNewArrivalsScreen();
 });
 $("#best-sellers-nav").click(function (e) {
-	showOnSalePerfumesScreen()
+	showOnSalePerfumesScreen();
 });
 $("#all-perfumes-nav").click(function (e) {
-	showAllPerfumesScreen()
+	showAllPerfumesScreen();
 });
 
 //declare variables
@@ -436,61 +436,52 @@ function loadHome() {
 loadHome();
 
 function singleItemShow(perfumeId) {
-	// Find the selected perfume from the data array
-	const selectedPerfume = allPerfumes.find(
-		(item) => item.perfume_id == perfumeId
-	);
+    // Find the selected perfume from the data array
+    const selectedPerfume = allPerfumes.find(
+        (item) => item.perfume_id == perfumeId
+    );
 
-	if (selectedPerfume) {
-		let sizeOptions = `<select id="size-select">
-            <option value="1">Size: ${selectedPerfume.size || "Default"} - $${
-			selectedPerfume.price
-		}</option>`;
+    if (selectedPerfume) {
+        let sizeButtons = `<div id="size-buttons" class="size-buttons">`;
 
-		if (selectedPerfume.size_2nd) {
-			sizeOptions += `<option value="2">Size: ${selectedPerfume.size_2nd} - $${selectedPerfume.price_2nd}</option>`;
-		}
+        sizeButtons += `<button class="size-btn active" data-size="1" data-price="${selectedPerfume.new_price || selectedPerfume.price}">Size: ${selectedPerfume.size || "Default"} </button>`;
 
-		sizeOptions += `</select>`;
+        if (selectedPerfume.size_2nd) {
+            sizeButtons += `<button class="size-btn" data-size="2" data-price="${selectedPerfume.new_price_2nd || selectedPerfume.price_2nd}">Size: ${selectedPerfume.size_2nd} </button>`;
+        }
 
-		// Replace hyphens with spaces in perfume name
-		const formattedPerfumeName = selectedPerfume.perfume_name.replace(
-			/-/g,
-			" "
-		);
+        sizeButtons += `</div>`;
 
-		document.querySelector(".all").innerHTML = `
+        const formattedPerfumeName = selectedPerfume.perfume_name.replace(/-/g, " ");
+
+        document.querySelector(".all").innerHTML = `
             <div class='single-item-container'>
                 
-                    <div class='single-image'>
-                        <img src="${
-													selectedPerfume.perfume_image
-												}" alt="${formattedPerfumeName}">
-                    </div>
-					<div class='content'>
+                <div class='single-image'>
+                    <img src="${selectedPerfume.perfume_image}" alt="${formattedPerfumeName}">
+                </div>
+                <div class='content'>
                     <div class='single-item-details'>
+					<p class='fairuz'>By Fairuz</p>
                         <h2>${formattedPerfumeName}</h2>
                         <h3>${selectedPerfume.brand_name}</h3>
-
-                        <p>Perfumer: ${selectedPerfume.perfumer.replace(
-													"-",
-													" "
-												)}</p>
-                        ${sizeOptions}
-                        <p class="price">Price: $${selectedPerfume.price}</p>
-                        ${
-													selectedPerfume.new_price
-														? `<p class="discounted-price">Discounted Price: $${selectedPerfume.new_price}</p>`
-														: ""
-												}
+                        <p> ${selectedPerfume.perfumer.replace("-", " ")}</p>
+                        ${sizeButtons}
+						<div class = 'prices-show'>
+                        <p class="price ${selectedPerfume.new_price
+							? 'cancelled-text'
+							: false}" id="original-price"> $${selectedPerfume.price}</p>
+                        ${selectedPerfume.new_price ? `<p class="discounted-price"> $${selectedPerfume.new_price}</p>` : ""}
+						</div>
                         <div class="quantity-container">
                             <label for="quantity">Quantity:</label>
                             <input type="number" id="quantity" name="quantity" min="1" value="1">
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                
-                <div class="notes-section">
+                        <div class="buy-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">buy now</button>
+                        </div>
+						<div class="notes-section">
                     <h4>Fragrance Notes</h4>
                     <div class="notes-container">
                         <div class="note-category">
@@ -505,64 +496,170 @@ function singleItemShow(perfumeId) {
                             <h5>Base Notes</h5>
                             <p>${selectedPerfume.base_note_names || "N/A"}</p>
                         </div>
+                        <div class="note-category">
+                            <h5>feels like :</h5>
+                            <p>${selectedPerfume.tag || "N/A"}</p>
+                        </div>
                     </div>
                 </div>
-				</div>
+                    </div>
+                </div>
+                
                 <div class="description">
                     <h4>Description</h4>
                     <p>${selectedPerfume.description}</p>
                 </div>
             </div>
         `;
+		// animations and stuff
+$('.single-image').hide();
+$('.single-item-details h2').hide();
+$('.single-item-details h3').hide();
+$('.single-item-details p').hide();
+$('.single-item-details .brand').hide();
+$('#size-select').hide();
+$('.single-item-details .price').hide();
+$('.single-item-details .discounted-price').hide();
+$('.quantity-container').hide();
+$('.add-to-cart').hide();
+$('.buy-now').hide();
+$('.notes-section').hide();
+$('.description h4').hide();
+$('.description p').hide();
 
-		$(".add-to-cart").click(function (e) {
-			const quantity = document.getElementById("quantity").value;
-			const sizeSelect = document.getElementById("size-select");
-			const selectedSize = sizeSelect.options[sizeSelect.selectedIndex].text;
-			const price =
-				document.getElementById("size-select").value === "1"
-					? selectedPerfume.new_price || selectedPerfume.price
-					: selectedPerfume.new_price_2nd || selectedPerfume.price_2nd;
 
-			// Call addToCart to store the item in localStorage
-			addToCart(
-				selectedPerfume.perfume_id,
-				formattedPerfumeName,
-				selectedSize,
-				quantity,
-				price,
-				selectedPerfume.perfume_image
-			);
+		setTimeout(function () {
+		
+			$(".single-image").fadeIn();
+		}, 300);
+		setTimeout(function () {
+		
+			$(".single-item-details h2").fadeIn(400);
+		}, 500);
+		setTimeout(function () {
+			$(".single-item-details h3").fadeIn(500);
+		}, 650);
+		setTimeout(function () {
+		
+			$(".single-item-details p").fadeIn(500);
+		}, 650);
+		setTimeout(function () {
+			
+			$(".single-item-details .brand").fadeIn(600);
+		}, 800);
+		setTimeout(function () {
+			
+			$("#size-select").fadeIn(600);
+		}, 850);
 
-			// Show cart popup for feedback to the user
-			showCartPopup(formattedPerfumeName, selectedSize + "$", quantity, price);
-		});
+		setTimeout(function () {
+			
+			$(".single-item-details .price").fadeIn(750);
+		}, 1000);
+		setTimeout(function () {
+			
+			$(".single-item-details .discounted-price").fadeIn(750);
+		}, 1000);
+		setTimeout(function () {
+			
+			$(".quantity-container").fadeIn(850);
+		}, 1150);
+		setTimeout(function () {
+			
+			$(".add-to-cart").fadeIn(650);
+		}, 1250);
+		setTimeout(function () {
+			
+			$(".buy-now").fadeIn(800);
+		}, 1550);
+		setTimeout(function () {
+		
+			$(".notes-section").fadeIn(2400);
+		}, 1500);
+		setTimeout(function () {
+			
+			$(".description h4").fadeIn(1800);
+		}, 3000);
+		setTimeout(function () {
+			
+			$(".description p").fadeIn(2000);
+		}, 3300);
 
-		// Add event listener for the "Add to Cart" button
+		document.querySelectorAll('.size-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                // Add active class to the clicked button
+                this.classList.add('active');
 
-		// Add event listener for size selection
-		document
-			.getElementById("size-select")
-			.addEventListener("change", function (e) {
-				const priceElement = document.querySelector(".price");
-				const discountedPriceElement =
-					document.querySelector(".discounted-price");
+                // Get the selected size and price
+                const selectedSize = this.getAttribute('data-size');
+                const selectedPrice = this.getAttribute('data-price');
 
-				if (e.target.value === "1") {
-					priceElement.textContent = `Price: $${selectedPerfume.price}`;
-					if (selectedPerfume.new_price) {
-						discountedPriceElement.textContent = `Discounted Price: $${selectedPerfume.new_price}`;
-					}
-				} else if (e.target.value === "2") {
-					priceElement.textContent = `Price: $${selectedPerfume.price_2nd}`;
-					if (selectedPerfume.new_price_2nd) {
-						discountedPriceElement.textContent = `Discounted Price: $${selectedPerfume.new_price_2nd}`;
-					} else if (selectedPerfume.new_price_2nd == null) {
-						discountedPriceElement.textContent = ``;
-					}
-				}
-			});
-	}
+                // Update the original price only if there is no discount price
+                const originalPriceElement = document.querySelector('#original-price');
+                const discountedPriceElement = document.querySelector('.discounted-price');
+
+                // Check if the selected size has a discounted price
+                if (selectedSize === "1") {
+                    originalPriceElement.textContent = `$${selectedPerfume.price}`;
+                    if (discountedPriceElement) {
+                        discountedPriceElement.textContent = `$${selectedPerfume.new_price}`;
+                    }
+                } else if (selectedSize === "2") {
+                    originalPriceElement.textContent = `$${selectedPerfume.price_2nd}`;
+                    if (discountedPriceElement && selectedPerfume.new_price_2nd) {
+                        discountedPriceElement.textContent = `$${selectedPerfume.new_price_2nd}`;
+                    } else if (discountedPriceElement) {
+                        discountedPriceElement.textContent = ``;
+                    }
+                }
+            });
+        });
+
+        // Add event listener for the "Add to Cart" button
+        document.querySelector(".add-to-cart").addEventListener("click", function () {
+            const quantity = document.getElementById("quantity").value;
+            const activeButton = document.querySelector(".size-btn.active");
+            const selectedSize = activeButton.textContent;
+            const price = activeButton.getAttribute('data-price');
+
+            // Call addToCart to store the item in localStorage
+            addToCart(
+                selectedPerfume.perfume_id,
+                formattedPerfumeName,
+                selectedSize,
+                quantity,
+                price,
+                selectedPerfume.perfume_image
+            );
+
+            // Show cart popup for feedback to the user
+            showCartPopup(formattedPerfumeName, selectedSize + " $", quantity, price);
+        });
+
+        // Add event listener for the "Buy Now" button
+        document.querySelector(".buy-now").addEventListener("click", function () {
+            const quantity = document.getElementById("quantity").value;
+            const activeButton = document.querySelector(".size-btn.active");
+            const selectedSize = activeButton.textContent;
+            const price = activeButton.getAttribute('data-price');
+
+            // Call addToCart to store the item in localStorage
+            addToCart(
+                selectedPerfume.perfume_id,
+                formattedPerfumeName,
+                selectedSize,
+                quantity,
+                price,
+                selectedPerfume.perfume_image
+            );
+
+            // Show cart popup for feedback to the user
+            showCartPopup(formattedPerfumeName, selectedSize + " $", quantity, price);
+            showCartScreen();
+        });
+    }
 }
 function addToCart(perfumeId, perfumeName, size, quantity, price, img) {
 	// Get the current cart from localStorage or initialize an empty array if it doesn't exist
@@ -1976,6 +2073,7 @@ function showCartScreen() {
                 <input type="tel" id="phone-number" name="phone-number" required pattern="[0-9]{11}">
             </div>
             <button type="submit">Submit Order</button>
+			<span id='refund'>*refund policies are on broken perfumes</span>
         </form>
     `;
 
@@ -2062,8 +2160,11 @@ function updateItemPrice(index) {
 }
 
 function sanitizeInput(input) {
-	const sanitizedInput = input.replace(/[^a-zA-Z0-9\u0621-\u064A\u0660-\u0669\s]/g, "");
-// Allow only letters, numbers, and spaces
+	const sanitizedInput = input.replace(
+		/[^a-zA-Z0-9\u0621-\u064A\u0660-\u0669\s]/g,
+		""
+	);
+	// Allow only letters, numbers, and spaces
 	return sanitizedInput.trim(); // Remove leading and trailing whitespace
 }
 
@@ -2096,19 +2197,19 @@ function getCart() {
 }
 
 function showNewArrivalsScreen() {
-    previousScreen = "newArrivals";
-    clearDOM();
-    $("#second-header-popup").fadeOut();
-    $(".search-popup").fadeOut();
-    $(".second-nav").hide();
-    $(".first-nav").fadeIn();
+	previousScreen = "newArrivals";
+	clearDOM();
+	$("#second-header-popup").fadeOut();
+	$(".search-popup").fadeOut();
+	$(".second-nav").hide();
+	$(".first-nav").fadeIn();
 
-    // Create container for search results and controls
-    const container = document.createElement("div");
-    container.className = "search-results-container";
+	// Create container for search results and controls
+	const container = document.createElement("div");
+	container.className = "search-results-container";
 
-    // Add sorting and filtering controls
-    const controlsHtml = `
+	// Add sorting and filtering controls
+	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
                 <label for="sort-select">Sort by:</label>
@@ -2130,104 +2231,125 @@ function showNewArrivalsScreen() {
         <div id="search-results" class="search-results-grid"></div>
     `;
 
-    container.innerHTML = controlsHtml;
-    document.querySelector(".all").appendChild(container);
+	container.innerHTML = controlsHtml;
+	document.querySelector(".all").appendChild(container);
 
-    const searchResultsElement = document.getElementById("search-results");
+	const searchResultsElement = document.getElementById("search-results");
 
-    // Filter perfumes for new arrivals (status === '2' or status === '4')
-    const newArrivals = allPerfumes.filter(item => item.status === '2' || item.status === '4');
+	// Filter perfumes for new arrivals (status === '2' or status === '4')
+	const newArrivals = allPerfumes.filter(
+		(item) => item.status === "2" || item.status === "4"
+	);
 
-    function renderSearchResults(results) {
-        searchResultsElement.innerHTML = "";
-        results.forEach((item) => {
-            const perfumeCard = `
+	function renderSearchResults(results) {
+		searchResultsElement.innerHTML = "";
+		results.forEach((item) => {
+			const perfumeCard = `
                 <div class="perfume-card" data-id="${item.perfume_id}">
                     <img src="${item.perfume_image}" alt="${item.perfume_name}">
                     <h3>${item.perfume_name.replace(/-/g, " ")}</h3>
                     <p>Brand: ${item.brand_name}</p>
                     <p>Price: $${item.price}</p>
-                    ${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+                    ${
+											item.new_price
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
+												: ""
+										}
                     <button class="view-details">View Details</button>
                 </div>
             `;
-            searchResultsElement.innerHTML += perfumeCard;
-        });
+			searchResultsElement.innerHTML += perfumeCard;
+		});
 
-        // Add event listeners to "View Details" buttons
-        document.querySelectorAll(".view-details").forEach((button) => {
-            button.addEventListener("click", function () {
-                const perfumeId = this.closest(".perfume-card").dataset.id;
-                let backButton = document.createElement('button');
-                backButton.className = 'show-all-nav';
-                backButton.id = 'back';
-                let img = document.createElement('img');
-                img.src = 'https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff';
-                backButton.appendChild(img);
-                document.body.appendChild(backButton);
+		// Add event listeners to "View Details" buttons
+		document.querySelectorAll(".view-details").forEach((button) => {
+			button.addEventListener("click", function () {
+				const perfumeId = this.closest(".perfume-card").dataset.id;
+				let backButton = document.createElement("button");
+				backButton.className = "show-all-nav";
+				backButton.id = "back";
+				let img = document.createElement("img");
+				img.src =
+					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
+				backButton.appendChild(img);
+				document.body.appendChild(backButton);
 
-                $("#back").click(function (e) {
-                    showNewArrivalsScreen();
-                    $("#back").remove();
-                });
-                singleItemShow(perfumeId);
-            });
-        });
-    }
+				$("#back").click(function (e) {
+					showNewArrivalsScreen();
+					$("#back").remove();
+				});
+				singleItemShow(perfumeId);
+			});
+		});
+	}
 
-    // Initial render
-    renderSearchResults(newArrivals);
+	// Initial render
+	renderSearchResults(newArrivals);
 
-    // Sorting functionality
-    document.getElementById("sort-select").addEventListener("change", function () {
-        const sortValue = this.value;
-        let sortedResults = [...newArrivals];
+	// Sorting functionality
+	document
+		.getElementById("sort-select")
+		.addEventListener("change", function () {
+			const sortValue = this.value;
+			let sortedResults = [...newArrivals];
 
-        switch (sortValue) {
-            case "name-asc":
-                sortedResults.sort((a, b) => a.perfume_name.localeCompare(b.perfume_name));
-                break;
-            case "name-desc":
-                sortedResults.sort((a, b) => b.perfume_name.localeCompare(a.perfume_name));
-                break;
-            case "price-asc":
-                sortedResults.sort((a, b) => (a.new_price || a.price) - (b.new_price || b.price));
-                break;
-            case "price-desc":
-                sortedResults.sort((a, b) => (b.new_price || b.price) - (a.new_price || a.price));
-                break;
-        }
+			switch (sortValue) {
+				case "name-asc":
+					sortedResults.sort((a, b) =>
+						a.perfume_name.localeCompare(b.perfume_name)
+					);
+					break;
+				case "name-desc":
+					sortedResults.sort((a, b) =>
+						b.perfume_name.localeCompare(a.perfume_name)
+					);
+					break;
+				case "price-asc":
+					sortedResults.sort(
+						(a, b) => (a.new_price || a.price) - (b.new_price || b.price)
+					);
+					break;
+				case "price-desc":
+					sortedResults.sort(
+						(a, b) => (b.new_price || b.price) - (a.new_price || a.price)
+					);
+					break;
+			}
 
-        renderSearchResults(sortedResults);
-    });
+			renderSearchResults(sortedResults);
+		});
 
-    // Filtering functionality
-    document.getElementById("apply-filter").addEventListener("click", function () {
-        const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
-        const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+	// Filtering functionality
+	document
+		.getElementById("apply-filter")
+		.addEventListener("click", function () {
+			const minPrice =
+				parseFloat(document.getElementById("min-price").value) || 0;
+			const maxPrice =
+				parseFloat(document.getElementById("max-price").value) || Infinity;
 
-        const filteredResults = newArrivals.filter((item) => {
-            const itemPrice = item.new_price || item.price;
-            return itemPrice >= minPrice && itemPrice <= maxPrice;
-        });
+			const filteredResults = newArrivals.filter((item) => {
+				const itemPrice = item.new_price || item.price;
+				return itemPrice >= minPrice && itemPrice <= maxPrice;
+			});
 
-        renderSearchResults(filteredResults);
-    });
+			renderSearchResults(filteredResults);
+		});
 }
 function showOnSalePerfumesScreen() {
-    previousScreen = "onSalePerfumes";
-    clearDOM();
-    $("#second-header-popup").fadeOut();
-    $(".search-popup").fadeOut();
-    $(".second-nav").hide();
-    $(".first-nav").fadeIn();
+	previousScreen = "onSalePerfumes";
+	clearDOM();
+	$("#second-header-popup").fadeOut();
+	$(".search-popup").fadeOut();
+	$(".second-nav").hide();
+	$(".first-nav").fadeIn();
 
-    // Create container for search results and controls
-    const container = document.createElement("div");
-    container.className = "search-results-container";
+	// Create container for search results and controls
+	const container = document.createElement("div");
+	container.className = "search-results-container";
 
-    // Add sorting and filtering controls
-    const controlsHtml = `
+	// Add sorting and filtering controls
+	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
                 <label for="sort-select">Sort by:</label>
@@ -2249,104 +2371,125 @@ function showOnSalePerfumesScreen() {
         <div id="search-results" class="search-results-grid"></div>
     `;
 
-    container.innerHTML = controlsHtml;
-    document.querySelector(".all").appendChild(container);
+	container.innerHTML = controlsHtml;
+	document.querySelector(".all").appendChild(container);
 
-    const searchResultsElement = document.getElementById("search-results");
+	const searchResultsElement = document.getElementById("search-results");
 
-    // Filter perfumes for on sale (status === '3' or status === '4')
-    const onSalePerfumes = allPerfumes.filter(item => item.status === '3' || item.status === '4');
+	// Filter perfumes for on sale (status === '3' or status === '4')
+	const onSalePerfumes = allPerfumes.filter(
+		(item) => item.status === "3" || item.status === "4"
+	);
 
-    function renderSearchResults(results) {
-        searchResultsElement.innerHTML = "";
-        results.forEach((item) => {
-            const perfumeCard = `
+	function renderSearchResults(results) {
+		searchResultsElement.innerHTML = "";
+		results.forEach((item) => {
+			const perfumeCard = `
                 <div class="perfume-card" data-id="${item.perfume_id}">
                     <img src="${item.perfume_image}" alt="${item.perfume_name}">
                     <h3>${item.perfume_name.replace(/-/g, " ")}</h3>
                     <p>Brand: ${item.brand_name}</p>
                     <p>Price: $${item.price}</p>
-                    ${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+                    ${
+											item.new_price
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
+												: ""
+										}
                     <button class="view-details">View Details</button>
                 </div>
             `;
-            searchResultsElement.innerHTML += perfumeCard;
-        });
+			searchResultsElement.innerHTML += perfumeCard;
+		});
 
-        // Add event listeners to "View Details" buttons
-        document.querySelectorAll(".view-details").forEach((button) => {
-            button.addEventListener("click", function () {
-                const perfumeId = this.closest(".perfume-card").dataset.id;
-                let backButton = document.createElement('button');
-                backButton.className = 'show-all-nav';
-                backButton.id = 'back';
-                let img = document.createElement('img');
-                img.src = 'https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff';
-                backButton.appendChild(img);
-                document.body.appendChild(backButton);
+		// Add event listeners to "View Details" buttons
+		document.querySelectorAll(".view-details").forEach((button) => {
+			button.addEventListener("click", function () {
+				const perfumeId = this.closest(".perfume-card").dataset.id;
+				let backButton = document.createElement("button");
+				backButton.className = "show-all-nav";
+				backButton.id = "back";
+				let img = document.createElement("img");
+				img.src =
+					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
+				backButton.appendChild(img);
+				document.body.appendChild(backButton);
 
-                $("#back").click(function (e) {
-                    showOnSalePerfumesScreen();
-                    $("#back").remove();
-                });
-                singleItemShow(perfumeId);
-            });
-        });
-    }
+				$("#back").click(function (e) {
+					showOnSalePerfumesScreen();
+					$("#back").remove();
+				});
+				singleItemShow(perfumeId);
+			});
+		});
+	}
 
-    // Initial render
-    renderSearchResults(onSalePerfumes);
+	// Initial render
+	renderSearchResults(onSalePerfumes);
 
-    // Sorting functionality
-    document.getElementById("sort-select").addEventListener("change", function () {
-        const sortValue = this.value;
-        let sortedResults = [...onSalePerfumes];
+	// Sorting functionality
+	document
+		.getElementById("sort-select")
+		.addEventListener("change", function () {
+			const sortValue = this.value;
+			let sortedResults = [...onSalePerfumes];
 
-        switch (sortValue) {
-            case "name-asc":
-                sortedResults.sort((a, b) => a.perfume_name.localeCompare(b.perfume_name));
-                break;
-            case "name-desc":
-                sortedResults.sort((a, b) => b.perfume_name.localeCompare(a.perfume_name));
-                break;
-            case "price-asc":
-                sortedResults.sort((a, b) => (a.new_price || a.price) - (b.new_price || b.price));
-                break;
-            case "price-desc":
-                sortedResults.sort((a, b) => (b.new_price || b.price) - (a.new_price || a.price));
-                break;
-        }
+			switch (sortValue) {
+				case "name-asc":
+					sortedResults.sort((a, b) =>
+						a.perfume_name.localeCompare(b.perfume_name)
+					);
+					break;
+				case "name-desc":
+					sortedResults.sort((a, b) =>
+						b.perfume_name.localeCompare(a.perfume_name)
+					);
+					break;
+				case "price-asc":
+					sortedResults.sort(
+						(a, b) => (a.new_price || a.price) - (b.new_price || b.price)
+					);
+					break;
+				case "price-desc":
+					sortedResults.sort(
+						(a, b) => (b.new_price || b.price) - (a.new_price || a.price)
+					);
+					break;
+			}
 
-        renderSearchResults(sortedResults);
-    });
+			renderSearchResults(sortedResults);
+		});
 
-    // Filtering functionality
-    document.getElementById("apply-filter").addEventListener("click", function () {
-        const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
-        const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+	// Filtering functionality
+	document
+		.getElementById("apply-filter")
+		.addEventListener("click", function () {
+			const minPrice =
+				parseFloat(document.getElementById("min-price").value) || 0;
+			const maxPrice =
+				parseFloat(document.getElementById("max-price").value) || Infinity;
 
-        const filteredResults = onSalePerfumes.filter((item) => {
-            const itemPrice = item.new_price || item.price;
-            return itemPrice >= minPrice && itemPrice <= maxPrice;
-        });
+			const filteredResults = onSalePerfumes.filter((item) => {
+				const itemPrice = item.new_price || item.price;
+				return itemPrice >= minPrice && itemPrice <= maxPrice;
+			});
 
-        renderSearchResults(filteredResults);
-    });
+			renderSearchResults(filteredResults);
+		});
 }
 function showAllPerfumesScreen() {
-    previousScreen = "allPerfumes";
-    clearDOM();
-    $("#second-header-popup").fadeOut();
-    $(".search-popup").fadeOut();
-    $(".second-nav").hide();
-    $(".first-nav").fadeIn();
+	previousScreen = "allPerfumes";
+	clearDOM();
+	$("#second-header-popup").fadeOut();
+	$(".search-popup").fadeOut();
+	$(".second-nav").hide();
+	$(".first-nav").fadeIn();
 
-    // Create container for search results and controls
-    const container = document.createElement("div");
-    container.className = "search-results-container";
+	// Create container for search results and controls
+	const container = document.createElement("div");
+	container.className = "search-results-container";
 
-    // Add sorting and filtering controls
-    const controlsHtml = `
+	// Add sorting and filtering controls
+	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
                 <label for="sort-select">Sort by:</label>
@@ -2368,89 +2511,106 @@ function showAllPerfumesScreen() {
         <div id="search-results" class="search-results-grid"></div>
     `;
 
-    container.innerHTML = controlsHtml;
-    document.querySelector(".all").appendChild(container);
+	container.innerHTML = controlsHtml;
+	document.querySelector(".all").appendChild(container);
 
-    const searchResultsElement = document.getElementById("search-results");
+	const searchResultsElement = document.getElementById("search-results");
 
-    // Get all perfumes
-    const allPerfumesList = allPerfumes; // No filter applied, just displaying all perfumes
+	// Get all perfumes
+	const allPerfumesList = allPerfumes; // No filter applied, just displaying all perfumes
 
-    function renderSearchResults(results) {
-        searchResultsElement.innerHTML = "";
-        results.forEach((item) => {
-            const perfumeCard = `
+	function renderSearchResults(results) {
+		searchResultsElement.innerHTML = "";
+		results.forEach((item) => {
+			const perfumeCard = `
                 <div class="perfume-card" data-id="${item.perfume_id}">
                     <img src="${item.perfume_image}" alt="${item.perfume_name}">
                     <h3>${item.perfume_name.replace(/-/g, " ")}</h3>
                     <p>Brand: ${item.brand_name}</p>
                     <p>Price: $${item.price}</p>
-                    ${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+                    ${
+											item.new_price
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
+												: ""
+										}
                     <button class="view-details">View Details</button>
                 </div>
             `;
-            searchResultsElement.innerHTML += perfumeCard;
-        });
+			searchResultsElement.innerHTML += perfumeCard;
+		});
 
-        // Add event listeners to "View Details" buttons
-        document.querySelectorAll(".view-details").forEach((button) => {
-            button.addEventListener("click", function () {
-                const perfumeId = this.closest(".perfume-card").dataset.id;
-                let backButton = document.createElement('button');
-                backButton.className = 'show-all-nav';
-                backButton.id = 'back';
-                let img = document.createElement('img');
-                img.src = 'https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff';
-                backButton.appendChild(img);
-                document.body.appendChild(backButton);
+		// Add event listeners to "View Details" buttons
+		document.querySelectorAll(".view-details").forEach((button) => {
+			button.addEventListener("click", function () {
+				const perfumeId = this.closest(".perfume-card").dataset.id;
+				let backButton = document.createElement("button");
+				backButton.className = "show-all-nav";
+				backButton.id = "back";
+				let img = document.createElement("img");
+				img.src =
+					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
+				backButton.appendChild(img);
+				document.body.appendChild(backButton);
 
-                $("#back").click(function (e) {
-                    showAllPerfumesScreen();
-                    $("#back").remove();
-                });
-                singleItemShow(perfumeId);
-            });
-        });
-    }
+				$("#back").click(function (e) {
+					showAllPerfumesScreen();
+					$("#back").remove();
+				});
+				singleItemShow(perfumeId);
+			});
+		});
+	}
 
-    // Initial render
-    renderSearchResults(allPerfumesList);
+	// Initial render
+	renderSearchResults(allPerfumesList);
 
-    // Sorting functionality
-    document.getElementById("sort-select").addEventListener("change", function () {
-        const sortValue = this.value;
-        let sortedResults = [...allPerfumesList];
+	// Sorting functionality
+	document
+		.getElementById("sort-select")
+		.addEventListener("change", function () {
+			const sortValue = this.value;
+			let sortedResults = [...allPerfumesList];
 
-        switch (sortValue) {
-            case "name-asc":
-                sortedResults.sort((a, b) => a.perfume_name.localeCompare(b.perfume_name));
-                break;
-            case "name-desc":
-                sortedResults.sort((a, b) => b.perfume_name.localeCompare(a.perfume_name));
-                break;
-            case "price-asc":
-                sortedResults.sort((a, b) => (a.new_price || a.price) - (b.new_price || b.price));
-                break;
-            case "price-desc":
-                sortedResults.sort((a, b) => (b.new_price || b.price) - (a.new_price || a.price));
-                break;
-        }
+			switch (sortValue) {
+				case "name-asc":
+					sortedResults.sort((a, b) =>
+						a.perfume_name.localeCompare(b.perfume_name)
+					);
+					break;
+				case "name-desc":
+					sortedResults.sort((a, b) =>
+						b.perfume_name.localeCompare(a.perfume_name)
+					);
+					break;
+				case "price-asc":
+					sortedResults.sort(
+						(a, b) => (a.new_price || a.price) - (b.new_price || b.price)
+					);
+					break;
+				case "price-desc":
+					sortedResults.sort(
+						(a, b) => (b.new_price || b.price) - (a.new_price || a.price)
+					);
+					break;
+			}
 
-        renderSearchResults(sortedResults);
-    });
+			renderSearchResults(sortedResults);
+		});
 
-    // Filtering functionality
-    document.getElementById("apply-filter").addEventListener("click", function () {
-        const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
-        const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+	// Filtering functionality
+	document
+		.getElementById("apply-filter")
+		.addEventListener("click", function () {
+			const minPrice =
+				parseFloat(document.getElementById("min-price").value) || 0;
+			const maxPrice =
+				parseFloat(document.getElementById("max-price").value) || Infinity;
 
-        const filteredResults = allPerfumesList.filter((item) => {
-            const itemPrice = item.new_price || item.price;
-            return itemPrice >= minPrice && itemPrice <= maxPrice;
-        });
+			const filteredResults = allPerfumesList.filter((item) => {
+				const itemPrice = item.new_price || item.price;
+				return itemPrice >= minPrice && itemPrice <= maxPrice;
+			});
 
-        renderSearchResults(filteredResults);
-    });
+			renderSearchResults(filteredResults);
+		});
 }
-
-
