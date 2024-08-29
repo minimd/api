@@ -207,4 +207,116 @@
             <!-- Add more cards as needed -->
         </div>
     </section>
+    <div class="section-title">
+        <h3 class="slider-title">amazing notes</h3>
+    </div>
+    <section class="scrollable-cards" id="third-scrollable">
+
+        <div class="card-container">
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/artist.jpeg" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Quentin Bisch
+            </h2>
+            <h3>
+            Bisch is known for his bold and creative use of accords, and his ability to adapt his style to fit the brand he is working with. He has been called a "star perfumer" and is highly sought after in the industry. In an interview, Bisch discussed his passion for perfumery and the pressure and expectations that come with being a successful perfumer. He described himself as a perfectionist who is always seeking to achieve more and is constantly creating perfumes in his mind.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/original.jpeg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Kurkdjian
+            </h2>
+            <h3>In 2009, Kurkdjian co-founded Maison Francis Kurkdjian with Marc Chaya. The Maison represents a blend of traditional French perfumery and modern innovation, offering a "fragrance wardrobe" that allows individuals to express their personalities through scent. His notable creations for  his eponymous Maison include Baccarat Rouge 540 and Aqua Universalis.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/amouage.png" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            AMOUAGE LYRIC 
+            </h2>
+            <h3>thought that lyric was not for me, I found it suffocating, lacking in breath...until today.
+June 13, 6 pm, 23 degrees Celsius, the fiery rays of the sun penetrate the lake water but the rain from the past night raises a cool evening breeze, the perfect climate for lyric. A warm, velvety rose under the sun is suddenly refreshed by a splash of citrus. The soil beneath it, moist and fertile, allows green buds to bloom.
+Elegant, sweet but energetic..as a true man should be. I truly understand the reason for identifying it as a male fragrance.
+
+There are no failed creations by Chong, they simply reveal themselves with time.
+            
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/flower.jpg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Lincoln Rose
+            </h2>
+            <h3>the king of flowers, lemony fresh with various nuances of powder, wood notes or fruit, feminine, clean, intensely romantic
+            </h3>
+        </div>
+    </section>
 </section>

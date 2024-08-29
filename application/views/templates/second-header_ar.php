@@ -1,7 +1,7 @@
 <section id="second-header">
     <div id="second-header-nav">
         
-            <h2 id="home-nav">الصفحة الئيسية</h2>
+            <h2 id="home-nav">الصفحة الرئيسية</h2>
            
             <h2 id="categories-nav">الاصناف</h2>
         

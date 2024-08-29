@@ -56,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //this is the how page.. if user write the limk www.api.com he will be here
 $route['default_controller'] = 'pages/view';
+$route['ar'] = 'pages/ar';
 
 
 

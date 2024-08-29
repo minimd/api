@@ -1,8 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-
 
 /* consts and stuff */
 :root {
@@ -10,10 +7,10 @@
 	--white-color: #f4f4f4;
 	--dark-color: #1d1d1d;
 	--grey-color: #d9d9d9;
-
+--e--font:"Bodoni Moda", serif;
 	--border-color: #29625e;
-	--fancy--font: "Bodoni Moda", serif;
-    --assistant-font:"assistant", "system-ui";
+	--fancy--font: "Amiri", serif;
+    --assistant-font:"Tajawal", sans-serif;
 }
 h1{
 	letter-spacing:2px;
@@ -34,6 +31,54 @@ h1{
 .arabic{
  font-family: "Cairo", sans-serif;;
 }
+#artist{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	flex-wrap: wrap;
+	padding-bottom	: 40px;
+	height: auto;
+}
+#artist .artist-image{
+display: flex;
+justify-content: center;
+align-items: center;
+    height: 450px;
+}
+#artist .artist-image img{
+
+    height: 70%;
+	box-shadow: 0 3px 8px rgba(0,0,0,0.4);;
+	
+}
+
+#artist .artist-quote{
+width: 55%;
+    height: auto;
+	
+}
+#artist .artist-quote h2{
+margin-bottom: 40px;
+display: inline-block;
+/* background-color: #02d0c215; */
+padding: 3px;
+border-radius: 3px;
+font-size: 28px;
+font-weight: bolder;
+font-family: var(--e--font);
+}
+#artist .artist-quote h3{
+
+display: inline-block;
+
+padding: 3px;
+border-radius: 3px;
+font-weight: 400;
+    font-family: var(--e--font);
+	font-size: 23px;
+}
+
 
 
 
@@ -719,60 +764,6 @@ margin-left: 12px;
 	scrollbar-width: none;  /* Firefox */
 }
 
-
-.artist{
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	width: 100%;
-	flex-wrap: wrap;
-	padding-bottom	: 60px;
-	height: auto;
-}
-.right{
-flex-direction: row-reverse;
-}
- div.artist-image{
-display: flex;
-justify-content: center;
-align-items: center;
-    height: 450px;
-}
-div.artist-image img{
-
-    height: 70%;
-	box-shadow: 0 3px 8px rgba(0,0,0,0.4);;
-	
-}
-img.r80{
-	height: 85% !important;
-}
-
-div.artist-quote{
-width: 55%;
-    height: auto;
-	
-}
-.artist .artist-quote h2{
-margin-bottom: 40px;
-display: inline-block;
-/* background-color: #02d0c215; */
-padding: 3px;
-border-radius: 3px;
-font-size: 28px;
-font-weight: bolder;
-font-family: var(--fancy--font);
-}
-.artist .artist-quote h3{
-
-display: inline-block;
-
-padding: 3px;
-border-radius: 3px;
-font-weight: 400;
-    font-family: var(--fancy--font);
-	font-size: 23px;
-}
 
 footer{
 	justify-self: end;

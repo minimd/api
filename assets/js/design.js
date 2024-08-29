@@ -22,6 +22,10 @@ $("#search-btn").click(function (e) {
 	$("#search-bar").val("");
 	$("#search-bar").focus();
 });
+$(".for-arabic").click(function (e) {
+	// e.preventDefault();
+	window.location.href = "ar";
+});
 $("#search-cancel").click(function (e) {
 	e.preventDefault();
 	$(".second-nav").hide();
@@ -444,10 +448,10 @@ function singleItemShow(perfumeId) {
     if (selectedPerfume) {
         let sizeButtons = `<div id="size-buttons" class="size-buttons">`;
 
-        sizeButtons += `<button class="size-btn active" data-size="1" data-price="${selectedPerfume.new_price || selectedPerfume.price}">Size: ${selectedPerfume.size || "Default"} </button>`;
+        sizeButtons += `<button class="size-btn active" data-size="1" data-price="${selectedPerfume.new_price || selectedPerfume.price}"> ${selectedPerfume.size || "Default"} </button>`;
 
         if (selectedPerfume.size_2nd) {
-            sizeButtons += `<button class="size-btn" data-size="2" data-price="${selectedPerfume.new_price_2nd || selectedPerfume.price_2nd}">Size: ${selectedPerfume.size_2nd} </button>`;
+            sizeButtons += `<button class="size-btn" data-size="2" data-price="${selectedPerfume.new_price_2nd || selectedPerfume.price_2nd}"> ${selectedPerfume.size_2nd} </button>`;
         }
 
         sizeButtons += `</div>`;
@@ -483,6 +487,7 @@ function singleItemShow(perfumeId) {
                         </div>
 						<div class="notes-section">
                     <h4>Fragrance Notes</h4>
+					<div class='line'></div>
                     <div class="notes-container">
                         <div class="note-category">
                             <h5>Top Notes</h5>
@@ -504,7 +509,7 @@ function singleItemShow(perfumeId) {
                 </div>
                     </div>
                 </div>
-                
+                <div class='line description-line'></div>
                 <div class="description">
                     <h4>Description</h4>
                     <p>${selectedPerfume.description}</p>
@@ -517,13 +522,14 @@ $('.single-item-details h2').hide();
 $('.single-item-details h3').hide();
 $('.single-item-details p').hide();
 $('.single-item-details .brand').hide();
-$('#size-select').hide();
+$('.size-btn').hide();
 $('.single-item-details .price').hide();
 $('.single-item-details .discounted-price').hide();
 $('.quantity-container').hide();
 $('.add-to-cart').hide();
 $('.buy-now').hide();
 $('.notes-section').hide();
+$('.description-line').hide();
 $('.description h4').hide();
 $('.description p').hide();
 
@@ -544,12 +550,16 @@ $('.description p').hide();
 			$(".single-item-details p").fadeIn(500);
 		}, 650);
 		setTimeout(function () {
+		
+			$(".single-item-details p").fadeIn(800);
+		}, 700);
+		setTimeout(function () {
 			
 			$(".single-item-details .brand").fadeIn(600);
 		}, 800);
 		setTimeout(function () {
 			
-			$("#size-select").fadeIn(600);
+			$(".size-btn").fadeIn(600);
 		}, 850);
 
 		setTimeout(function () {
@@ -570,12 +580,16 @@ $('.description p').hide();
 		}, 1250);
 		setTimeout(function () {
 			
-			$(".buy-now").fadeIn(800);
-		}, 1550);
+			$(".buy-now").fadeIn(1400);
+		}, 1250);
 		setTimeout(function () {
 		
 			$(".notes-section").fadeIn(2400);
 		}, 1500);
+		setTimeout(function () {
+			
+			$(".description-line").fadeIn(1800);
+		}, 3000);
 		setTimeout(function () {
 			
 			$(".description h4").fadeIn(1800);
@@ -1160,6 +1174,9 @@ function createPerfumeCard(perfume) {
 	`;
 	return card;
 }
+
+
+
 function showAllNotesScreen() {
 	$("#second-header-popup").fadeOut();
 	clearDOM();
@@ -2035,16 +2052,17 @@ function showCartScreen() {
 		cart.forEach((item, index) => {
 			const totalItemPrice = item.quantity * item.price;
 			cartItemsHtml += `
-                <div class="cart-item" data-id="${item.perfumeId}">
-                   <img src="${item.img}" alt="${item.perfumeName}">
+                <div class="cart-item" data-id="${item.perfumeId}"><div class='cart-item-first-line'>
+                   <img src="${item.img}" alt="${item.perfumeName.length > 20 ? item.perfumeName.substring(0, 18): item.perfumeName}">
                     <h3 class="item-name">${item.perfumeName}</h3>
-                    <p>${item.size}</p>
+                    <p>${item.size}</p></div>
+					<div class='cart-item-second-line'>
                     <p><button class="quantity-btn" data-action="decrease" data-index="${index}">-</button> 
                     ${item.quantity} 
                     <button class="quantity-btn" data-action="increase" data-index="${index}">+</button></p>
                     <p class="item-price">Total Price: $<span id="item-price-${index}">${totalItemPrice}</span></p>
                     <button class="view-item" data-id="${item.perfumeId}">View Item</button>
-                </div>
+                </div></div>
             `;
 		});
 		cartItemsHtml += `<button id="clear-cart">Clear Cart</button>`;

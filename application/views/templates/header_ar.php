@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>frags</title>
-  <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/style_ar.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/media-query.css') ?>">
 
 </head>
@@ -33,7 +33,7 @@
         <button id="search-cancel" class="search-btn-inside-search">
           <img src="https://img.icons8.com/?size=100&id=OpfeY8fFZX2F&format=png&color=215451" alt="">
         </button>
-        <input class="" type="text" placeholder="إبحث عن العطرٍ" id="search-bar">
+        <input class="" type="text" placeholder="بحث عن العطر" id="search-bar">
         <button id="search-go" class="search-btn-inside-search">
           <img src="https://img.icons8.com/?size=100&id=132&format=png&color=215451" alt="">
         </button>

@@ -13,9 +13,16 @@ class Pages extends CI_Controller {
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/second_header', $data);
-        $this->load->view('pages/'.$page, $data);
+        $this->load->view('pages/main', $data);
         $this->load->view('templates/second-footer', $data);
         $this->load->view('templates/footer', $data);
+}
+public function ar(){
+        $this->load->view('templates/header_ar');
+        $this->load->view('templates/second-header_ar');
+        $this->load->view('pages/main_ar');
+        $this->load->view('templates/second-footer_ar');
+        $this->load->view('templates/footer_ar');
 }
 
 

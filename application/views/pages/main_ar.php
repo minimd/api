@@ -209,3 +209,17 @@
             <!-- Add more cards as needed -->
         </div>
     </section>
+    
+    <section id="" class="artist">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/artist.jpeg" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="quote">
+            Quentin Bisch
+            </h2>
+            <h3>
+            Bisch is known for his bold and creative use of accords, and his ability to adapt his style to fit the brand he is working with. He has been called a "star perfumer" and is highly sought after in the industry. In an interview, Bisch discussed his passion for perfumery and the pressure and expectations that come with being a successful perfumer. He described himself as a perfectionist who is always seeking to achieve more and is constantly creating perfumes in his mind.
+            </h3>
+        </div>
+    </section>
+    </section>
