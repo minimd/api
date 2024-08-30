@@ -45,9 +45,8 @@ $("#home-nav").click(function (e) {
 });
 $(".for-english").click(function (e) {
 	e.preventDefault();
-	window.location.href='http://localhost/api';
-  console.log('ee');
-  
+	window.location.href = "http://localhost/api";
+	console.log("ee");
 });
 $("h1").click(function (e) {
 	e.preventDefault();
@@ -240,6 +239,29 @@ fetch("http://localhost/api/get_all_notes", { mode: "no-cors" }).then(
 
 			// Limit the number of brands to 8
 			const notesToShow = notesList.slice(0, 15);
+			const mainScreenNotes = notesToShow.slice(0, 4);
+			mainScreenNotes.forEach((note, i) => {
+				console.log(mainScreenNotes);
+
+				document.querySelectorAll(".main-note")[
+					i
+				].innerHTML = `<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
+                
+                <div class="inner-card-text">
+                    <h3 value='${note.name}'>${note.name}</h3>
+                    
+                </div>
+
+                <button value='${note.name}'>عرض العطور</button>`;
+			});
+			for (let i = 0; i < mainScreenNotes.length; i++) {
+				document
+					.querySelectorAll(".main-note button")
+					[i].addEventListener("click", function (e) {
+						showPerfumesByNote(e.target.getAttribute("value"));
+						console.log(e.target.getAttribute("value"));
+					});
+			}
 		})
 );
 
@@ -248,7 +270,7 @@ let allPerfumes;
 
 function loadHome() {
 	fetch(`http://localhost/api/search/all`, { mode: "no-cors" }).then(
-		(response) =>{
+		(response) => {
 			response.json().then((data) => {
 				allPerfumes = data;
 				console.log(data);
@@ -441,10 +463,31 @@ function loadHome() {
 				$("#search-bar").on("input", debouncedSearch);
 
 				//here you code end
-			})
-});
+			});
+		}
+	);
 }
 loadHome();
+
+function findSimilarPerfumes(selectedPerfume, allPerfumes) {
+	const selectedNotes = (selectedPerfume.all_note_names || "")
+		.toLowerCase()
+		.split(",");
+
+	return allPerfumes
+		.filter((perfume) => perfume.perfume_id !== selectedPerfume.perfume_id)
+		.map((perfume) => {
+			const perfumeNotes = (perfume.all_note_names || "")
+				.toLowerCase()
+				.split(",");
+			const commonNotes = selectedNotes.filter((note) =>
+				perfumeNotes.includes(note)
+			);
+			return { ...perfume, similarity: commonNotes.length };
+		})
+		.sort((a, b) => b.similarity - a.similarity)
+		.slice(0, 3);
+}
 
 function singleItemShow(perfumeId) {
 	// Find the selected perfume from the data array
@@ -453,6 +496,36 @@ function singleItemShow(perfumeId) {
 	);
 
 	if (selectedPerfume) {
+		const similarPerfumes = findSimilarPerfumes(selectedPerfume, allPerfumes);
+		let similarPerfumesHtml = `
+            <div class="similar-perfumes-section">
+                <h4>قد يعجبك ايضا</h4>
+                <div class="similar-perfumes-container">
+        `;
+
+		similarPerfumes.forEach((perfume) => {
+			similarPerfumesHtml += `
+                <div class="perfume-card" data-id="${perfume.perfume_id}">
+                    <img src="${perfume.perfume_image}" alt="${
+				perfume.perfume_name
+			}">
+                    <h3>${perfume.perfume_name.replace(/-/g, " ")}</h3>
+                    <p>Brand: ${perfume.brand_name}</p>
+                    <p>Price: $${perfume.price}</p>
+                    ${
+											perfume.new_price
+												? `<p class="sale-price">$${perfume.new_price}</p>`
+												: ""
+										}
+                    <button class="view-details">عرض المزيد</button>
+                </div>
+            `;
+		});
+
+		similarPerfumesHtml += `
+                </div>
+            </div>
+        `;
 		let sizeButtons = `<div id="size-buttons" class="size-buttons">`;
 
 		sizeButtons += `<button class="size-btn active" data-size="1" data-price="${
@@ -532,8 +605,10 @@ function singleItemShow(perfumeId) {
                 <div class='line description-line'></div>
                 <div class="description">
                     <h4>Description</h4>
-                    <p>${selectedPerfume.description}</p>
+                    <p>${selectedPerfume.description} هذا العطر ${selectedPerfume.box =='0' ? 'جديد.':selectedPerfume.box=='1'? 'تيستر' : selectedPerfume.box=='2'? 'دون غلاف':selectedPerfume.box=='3'? 'نادر':null}</p>
                 </div>
+								<div class='line similar-perfumes-line'></div>
+                ${similarPerfumesHtml}
             </div>
         `;
 		// animations and stuff
@@ -552,6 +627,8 @@ function singleItemShow(perfumeId) {
 		$(".description-line").hide();
 		$(".description h4").hide();
 		$(".description p").hide();
+		$(".similar-perfumes-line").hide();
+		$(".similar-perfumes-section").hide();
 
 		setTimeout(function () {
 			$(".single-image").fadeIn();
@@ -602,6 +679,22 @@ function singleItemShow(perfumeId) {
 		setTimeout(function () {
 			$(".description p").fadeIn(2000);
 		}, 3300);
+		setTimeout(function () {
+			$(".similar-perfumes-line").fadeIn(1800);
+		}, 3500);
+		setTimeout(function () {
+			$(".similar-perfumes-section").fadeIn(2000);
+		}, 3800);
+
+		//event listener for the "similar perfumes" button
+		document
+			.querySelectorAll(".similar-perfumes-container .view-details")
+			.forEach((button) => {
+				button.addEventListener("click", function () {
+					const perfumeId = this.closest(".perfume-card").dataset.id;
+					singleItemShow(perfumeId);
+				});
+			});
 
 		document.querySelectorAll(".size-btn").forEach((button) => {
 			button.addEventListener("click", function () {
@@ -2078,7 +2171,7 @@ function showCartScreen() {
                 </div></div>
             `;
 		});
-		cartItemsHtml += `<button id="clear-cart">Clear Cart</button>`;
+		cartItemsHtml += `<button id="clear-cart">إلغاء السلة</button>`;
 	}
 
 	cartItemsHtml += "</div>";

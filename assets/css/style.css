@@ -774,6 +774,32 @@ font-weight: 400;
 	font-size: 23px;
 }
 
+
+/* similar notes */
+
+.similar-perfumes-container{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: auto;
+	margin-top: 50px;
+	padding-bottom: 60px;
+	flex-wrap: wrap;
+
+}
+.similar-perfumes-section h4{
+	font-family: var(--fancy--font);
+	font-size: 30px;
+}
+.similar-perfumes-section {
+
+width: 100%;
+display: flex;
+justify-content: flex-start;
+flex-direction: column;
+align-items: center;
+}
 footer{
 	justify-self: end;
 	display: flex;
@@ -788,6 +814,9 @@ gap: 16px;
 
 
 
+}
+.for-arabic{
+	cursor: pointer;
 }
 
 /* single item stuff */

@@ -64,6 +64,8 @@ $route['search'] = 'returner/search';
 
 //this is the route for the all items fetch.. followed by limit/offset
 $route['search/all'] = 'returner/get_all';
+$route['admin/add_perfume'] = 'admin/add_perfume';
+$route['admin/save_perfume'] = 'admin/save_perfume';
 $route['get_all_brands'] = 'returner/get_brands';
 $route['get_all_notes'] = 'returner/get_notes';
 //this is the search by type/name/limit/offset

@@ -1,0 +1,49 @@
+header{
+    text-align: center;
+    margin-top: 150px;
+}
+body{
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 50px;
+    font-size: 24px;
+}
+
+button{
+    padding: 20px;
+    margin: 12px;
+    background-color: rgb(173, 173, 255);
+}
+form{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 3px
+}
+
+input,textarea{
+padding: 7px;
+font-size: 20px;
+}
+.container{
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    flex-direction: column;
+}
+.brands{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+
+}
+.brand{
+    display: flex;
+}
+select{
+    padding: 8px;
+}

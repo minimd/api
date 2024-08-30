@@ -764,6 +764,85 @@ margin-left: 12px;
 	scrollbar-width: none;  /* Firefox */
 }
 
+.artist{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	flex-wrap: wrap;
+	padding-bottom	: 60px;
+	height: auto;
+}
+.right{
+flex-direction: row-reverse;
+}
+ div.artist-image{
+display: flex;
+justify-content: center;
+align-items: center;
+    height: 450px;
+}
+div.artist-image img{
+
+    height: 70%;
+	box-shadow: 0 3px 8px rgba(0,0,0,0.4);;
+	
+}
+img.r80{
+	height: 85% !important;
+}
+
+div.artist-quote{
+width: 55%;
+    height: auto;
+	
+}
+.artist .artist-quote h2{
+margin-bottom: 40px;
+display: inline-block;
+/* background-color: #02d0c215; */
+padding: 3px;
+border-radius: 3px;
+font-size: 28px;
+font-weight: bolder;
+font-family: var(--fancy--font);
+}
+.artist .artist-quote h3{
+
+display: inline-block;
+
+padding: 3px;
+border-radius: 3px;
+font-weight: 400;
+    font-family: var(--fancy--font);
+	font-size: 23px;
+}
+.similar-perfumes-container{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: auto;
+	margin-top: 50px;
+	padding-bottom: 60px;
+	flex-wrap: wrap;
+
+}
+
+.similar-perfumes-section h4{
+	font-family: var(--fancy--font);
+	font-size: 30px;
+}
+.similar-perfumes-section {
+
+width: 100%;
+display: flex;
+justify-content: flex-start;
+flex-direction: column;
+align-items: center;
+}
+
+
 
 footer{
 	justify-self: end;
@@ -779,6 +858,9 @@ gap: 16px;
 
 
 
+}
+.for-english{
+	cursor: pointer;
 }
 
 /* single item stuff */
