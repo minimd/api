@@ -15,7 +15,7 @@
         <!-- Display flash messages -->
 
 
-        <form action="<?= base_url('admin/save_perfume'); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?= base_url('sfgilsdf_uwedva/save_perfume'); ?>" method="POST" enctype="multipart/form-data">
             <!-- Text Inputs -->
             <label for="name">Perfume Name:</label>
             <input type="text" id="name" name="name" required><br>

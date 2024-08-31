@@ -1,4 +1,4 @@
-<form method="post" action="<?= base_url('admin/create_note'); ?>">
+<!-- <form method="post" action="<?= base_url('sfgilsdf_uwedva/create_note'); ?>">
     <label for="name">Note Name:</label>
     <input type="text" id="name" name="name" required>
 
@@ -6,4 +6,4 @@
     <input type="text" id="note_image" name="note_image">
 
     <input type="submit" name="submit" value="Create Note">
-</form>
+</form> -->

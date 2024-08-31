@@ -2276,24 +2276,29 @@ function showCartScreen() {
 					delete obj[lastKey];
 					delete obj[firstKey];
 				});
+
 				
-				const text =
-					"new order from : " +
-					$("#name").val() +
-					"_     _" +
-					"location : " +
-					$("#city").val() +
-					"_    _" +
-					`address:` +
-					$("#street").val() +
-					'phone number:'+ $('#phone-number').val()+
-					
-					`order is ` +
-					JSON.stringify(currenrCard);
-				("");
+
+				bot.sendMessage("**********").then((res) => {
+					bot.sendMessage("new order:").then((res) => {
+						bot.sendMessage("name: " + $("#name").val()).then((res) => {
+							bot.sendMessage("place: " + $("#city").val()).then((res) => {
+								bot
+									.sendMessage("address: " + $("#street").val())
+									.then((res) => {
+										bot
+											.sendMessage("phone number: " + $("#phone-number").val())
+											.then((res) => {currenrCard.forEach((obj, index) => {
+												bot.sendMessage(JSON.stringify(currenrCard[index])).then((res) => {});
+											});});
+									});
+							});
+						});
+					});
+				});
+
 				
-				bot.sendMessage(text).then((res) => {});
-				
+
 				localStorage.removeItem("cart");
 				alert("Order submitted successfully!");
 			} else {

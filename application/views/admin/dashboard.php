@@ -1,3 +1,4 @@
+<!-- Path: application/views/admin/dashboard.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,31 +12,33 @@
 <body>
     <header>what do you want to do ?</header>
     <div>add
-        <a href="<?php echo base_url('sur_ad/stc')?>">
-        <button>add perfum</button></a>
-        <a href="">
-        <button>add note</button></a>
-        <a href="">
-        <button>add brand</button></a>
+        <a href="<?php echo base_url('sfgilsdf_uwedva/add_perfume') ?>">
+            <button>add perfum</button></a>
+        <a href="<?php echo base_url('sfgilsdf_uwedva/add_note') ?>">
+            <button>Add Note</button>
+        </a>
+        <a href="<?php echo base_url('sfgilsdf_uwedva/add_brand') ?>">
+            <button>Add Brand</button>
+        </a>
     </div>
     <div>edit
-        <a href="">
-        <button>edit perfum</button></a>
-
+        <h2>Edit Perfumes</h2>
+        <ul>
+            <?php foreach ($perfumes as $perfume) : ?>
+                <li>
+                    <?php echo $perfume['name']; ?>
+                    <a href="<?php echo base_url('sfgilsdf_uwedva/edit_perfume/' . $perfume['id']); ?>">
+                        <button>Edit</button>
+                    </a>
+                    <a href="<?php echo base_url('sfgilsdf_uwedva/delete_perfume/' . $perfume['id']); ?>" onclick="return confirm('Are you sure you want to delete this perfume?');">
+                        <button>Delete</button>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
-    <div>delete
-        <a href="">
-        <button>delete perfum</button></a>
 
-    </div>
-
-
-
-
-
-
-
-    <script src="<?php echo base_url('assets/js/admin.js')   ?>"></script>
+    <script src="<?php echo base_url('assets/js/admin.js') ?>"></script>
 </body>
 
 </html>

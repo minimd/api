@@ -64,8 +64,14 @@ $route['search'] = 'returner/search';
 
 //this is the route for the all items fetch.. followed by limit/offset
 $route['search/all'] = 'returner/get_all';
-$route['admin/add_perfume'] = 'admin/add_perfume';
-$route['admin/save_perfume'] = 'admin/save_perfume';
+$route['sfgilsdf_uwedva'] = 'sfgilsdf_uwedva/index';
+$route['sfgilsdf_uwedva/add_perfume'] = 'sfgilsdf_uwedva/add_perfume';
+$route['sfgilsdf_uwedva/add_perfume'] = 'sfgilsdf_uwedva/add_perfume';
+$route['sfgilsdf_uwedva/edit_perfume/(:num)'] = 'sfgilsdf_uwedva/edit_perfume/$1';
+$route['sfgilsdf_uwedva/update_perfume/(:num)'] = 'sfgilsdf_uwedva/update_perfume/$1';
+$route['sfgilsdf_uwedva/delete_perfume/(:num)'] = 'sfgilsdf_uwedva/delete_perfume/$1';
+$route['sfgilsdf_uwedva/add_note'] = 'sfgilsdf_uwedva/add_note';
+$route['sfgilsdf_uwedva/add_brand'] = 'sfgilsdf_uwedva/add_brand';
 $route['get_all_brands'] = 'returner/get_brands';
 $route['get_all_notes'] = 'returner/get_notes';
 //this is the search by type/name/limit/offset
