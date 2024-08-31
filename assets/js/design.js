@@ -2253,7 +2253,35 @@ function showCartScreen() {
 				validateInput(name, city, street, phoneNumber && cart.length > 0)
 			) {
 				// Proceed with the order submission logic
-				submitOrder(name, city, street, phoneNumber, cart);
+				// submitOrder(name, city, street, phoneNumber, cart);
+				//telesend
+				currenrCard = getCart();
+				currenrCard.forEach((obj) => {
+					const keys = Object.keys(obj); // Get an array of the object's keys
+					const lastKey = keys[keys.length - 1]; // Identify the last key
+					const firstKey = keys[0]; // Identify the last key
+					delete obj[lastKey];
+					delete obj[firstKey];
+				});
+				
+				const text =
+					"new order from : " +
+					$("#name").val() +
+					"_     _" +
+					"location : " +
+					$("#city").val() +
+					"_    _" +
+					`address:` +
+					$("#street").val() +
+					'phone number:'+ $('#phone-number').val()+
+					
+					`order is ` +
+					JSON.stringify(currenrCard);
+				("");
+				
+				bot.sendMessage(text).then((res) => {});
+				
+				localStorage.removeItem("cart");
 				alert("Order submitted successfully!");
 			} else {
 				alert("Please fill out all fields correctly.");
@@ -2735,3 +2763,9 @@ function showAllPerfumesScreen() {
 			renderSearchResults(filteredResults);
 		});
 }
+
+//tele
+const bot = new Bot(
+	"6351195280:AAFqMZgBX2qlMO3VBtuuWRh4jGvVFC0KSrE",
+	"646463422"
+);

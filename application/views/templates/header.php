@@ -24,7 +24,7 @@
       </div>
       <div id="cart-div">
         <p id="cart">go to cart</p>
-        <img src="https://img.icons8.com/?size=100&id=59997&format=png&color=000000" alt="">
+        <img src="https://img.icons8.com/?size=100&id=59997&format=png&color=ffffff" alt="">
       </div>
 
     </nav>

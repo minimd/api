@@ -8,7 +8,7 @@
 	--dark-color: #1d1d1d;
 	--grey-color: #d9d9d9;
 --e--font:"Bodoni Moda", serif;
-	--border-color: #29625e;
+--border-color: #348080;
 	--fancy--font: "Amiri", serif;
     --assistant-font:"Tajawal", sans-serif;
 }
@@ -113,9 +113,9 @@ header {
 	justify-content: baseline;
 	align-items: center;
 	height: auto;
-	background-color: var(--ligh--color);
+	background-color: var(--border--color);
 	width: 100%;
-	color: var(--dark-color);
+	color: var(--ligh-color);
 	font-family: var(--fancy--font);
 }
 .header-nav {
@@ -125,6 +125,7 @@ header {
 	align-items: center;
 	height: 90px;
 	width: 100%;
+	background-color: var(--border-color);
 }
 
 nav #search-div {
@@ -284,7 +285,7 @@ max-width: 375px;
 	align-items: center;
 	min-width: 260px;
 	/* max-width: 400px; */
-	background-color: var(--grey-color);
+	background-color: var(--popup-color);
 }
 .margined{
 	margin: 0px auto;
@@ -1150,7 +1151,7 @@ p.fairuz{
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	transition: all 1.2 ease-in-out;
 	min-height: 185px;
 	
@@ -1160,7 +1161,7 @@ p.fairuz{
 .notes-section h4{
 	font-size: 24px;
 	font-family: var(--fancy--font);
-	text-align: center;
+	text-align: left;
 	
 
 }
@@ -1173,11 +1174,11 @@ p.fairuz{
 	font-size: 	22px;
 	font-family: var(--assistant-font);
 margin-top: 4px;
-text-align: center;
+text-align: left;
 }
 .notes-section p{
 
-text-align: center;
+text-align: left;
 font-size: 18px;
 }
 .search-results-container {

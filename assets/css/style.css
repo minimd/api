@@ -11,7 +11,7 @@
 	--dark-color: #1d1d1d;
 	--grey-color: #d9d9d9;
 
-	--border-color: #29625e;
+	--border-color: #348080;
 	--fancy--font: "Bodoni Moda", serif;
     --assistant-font:"assistant", "system-ui";
 }
@@ -68,9 +68,9 @@ header {
 	justify-content: baseline;
 	align-items: center;
 	height: auto;
-	background-color: var(--ligh--color);
+	background-color: var(--border-color);
 	width: 100%;
-	color: var(--dark-color);
+	color: var(--ligh-color);
 	font-family: var(--fancy--font);
 }
 .header-nav {
@@ -239,7 +239,7 @@ max-width: 375px;
 	align-items: center;
 	min-width: 260px;
 	/* max-width: 400px; */
-	background-color: var(--grey-color);
+	background-color: var(--border-color);
 }
 .margined{
 	margin: 0px auto;
@@ -1101,12 +1101,12 @@ p.fairuz{
 	border: 2px var(--border-color) solid;
 } 
 .notes-section{
-	margin-top: 12px;
+	margin-top: 24px;
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	transition: all 1.2 ease-in-out;
 	min-height: 185px;
 	
@@ -1116,7 +1116,7 @@ p.fairuz{
 .notes-section h4{
 	font-size: 24px;
 	font-family: var(--fancy--font);
-	text-align: center;
+	text-align: left;
 	
 
 }
@@ -1129,11 +1129,11 @@ p.fairuz{
 	font-size: 	22px;
 	font-family: var(--assistant-font);
 margin-top: 4px;
-text-align: center;
+text-align: left;
 }
 .notes-section p{
 
-text-align: center;
+text-align: left;
 font-size: 18px;
 }
 .search-results-container {
