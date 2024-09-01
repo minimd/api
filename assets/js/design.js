@@ -368,6 +368,10 @@ function loadHome() {
 			}
 			// Search function
 			function searchByName() {
+				document.querySelector(
+					".search-popup-container"
+				).innerHTML ='';
+
 				let searchInput = document.getElementById("search-bar").value;
 				if (searchInput === "") {
 					return;
@@ -389,7 +393,7 @@ function loadHome() {
 						arabicName.includes(searchInput)
 					);
 				}); // This limits the results to a maximum of 6 items
-				let miniSearchItems = searchBarResults.slice(0, 6);
+				let miniSearchItems = searchBarResults.slice(0, 9);
 				if (miniSearchItems.length > 0) {
 					console.log(miniSearchItems);
 				} else {
@@ -398,10 +402,7 @@ function loadHome() {
 
 				// Here you can add code to display the search results
 
-				document.querySelector(
-					".search-popup-container"
-				).innerHTML = `<div class='margined'><button class= 'show-all-nav' id='show-all-search'>Show all searches</button><div>`;
-
+				
 				miniSearchItems.forEach((item) => {
 					document.querySelector(".search-popup-container").innerHTML += `
 		<div class="search-item" value='${item.perfume_id}'>
@@ -424,6 +425,10 @@ function loadHome() {
         </div>
 		`;
 				});
+				document.querySelector(
+					".search-popup-container"
+				).innerHTML += `<div class='margined'><button class= 'show-all-nav' id='show-all-search'>Show all searches</button><div>`;
+
 				$("#show-all-search").click(function (e) {
 					e.preventDefault();
 					console.log("sy");

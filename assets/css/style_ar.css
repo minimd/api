@@ -285,10 +285,13 @@ max-width: 375px;
 	align-items: center;
 	min-width: 260px;
 	/* max-width: 400px; */
-	background-color: var(--popup-color);
+	background-color: var(--border-color);
 }
 .margined{
 	margin: 0px auto;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .search-popup-container .search-item img{
 height: 100%;

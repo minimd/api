@@ -243,6 +243,9 @@ max-width: 375px;
 }
 .margined{
 	margin: 0px auto;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .search-popup-container .search-item img{
 height: 100%;
