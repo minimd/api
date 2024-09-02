@@ -61,7 +61,7 @@ $("#cart-div img").click(function (e) {
 //carousel
 
 let currentSlide = 0;
-showSlide(currentSlide);
+
 
 function showSlide(index) {
 	const slides = document.querySelectorAll(".carousel-item");
@@ -77,7 +77,6 @@ function changeSlide(n) {
 
 //slider
 
-const track = document.querySelector(".brand-slider-track");
 
 //fuck the slider
 
@@ -237,28 +236,28 @@ fetch("http://localhost/api/get_all_notes", {}).then((response) =>
 		// Limit the number of brands to 8
 		const notesToShow = notesList.slice(0, 17);
 		const mainScreenNotes = notesToShow.slice(0, 4);
-		mainScreenNotes.forEach((note, i) => {
-			console.log(mainScreenNotes);
+		// mainScreenNotes.forEach((note, i) => {
+		// 	console.log(mainScreenNotes);
 			
-			document.querySelectorAll('.main-note')[i].innerHTML = 
-			`<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
+		// 	document.querySelectorAll('.main-note')[i].innerHTML = 
+		// 	`<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
                 
-                <div class="inner-card-text">
-                    <h3 value='${note.name}'>${note.name}</h3>
+        //         <div class="inner-card-text">
+        //             <h3 value='${note.name}'>${note.name}</h3>
                     
-                </div>
+        //         </div>
 
-                <button value='${note.name}'>view perfumes</button>`
-		});
-		for (let i = 0; i < mainScreenNotes.length; i++) {
-			document
-                .querySelectorAll(".main-note button")
-                [i].addEventListener("click", function (e) {
-                    showPerfumesByNote(e.target.getAttribute("value"));
-					console.log(e.target.getAttribute("value"));
+        //         <button value='${note.name}'>view perfumes</button>`
+		// });
+		// for (let i = 0; i < mainScreenNotes.length; i++) {
+		// 	document
+        //         .querySelectorAll(".main-note button")
+        //         [i].addEventListener("click", function (e) {
+        //             showPerfumesByNote(e.target.getAttribute("value"));
+		// 			console.log(e.target.getAttribute("value"));
 					
-                });
-		}
+        //         });
+		// }
 		
 	})
 );
@@ -271,7 +270,319 @@ function loadHome() {
 		response.json().then((data) => {
 			allPerfumes = data;
 			console.log(data);
+			console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+			const stateObject = { section: 'main' };
+			userMovement.push(stateObject);
+			window.history.pushState(stateObject, '', 'all-perfumes');
 
+	window.history.pushState(stateObject, '', 'main');
+	//
+	//
+	//
+	//
+$('.all').html(`
+    <div class="carousel">
+        <div class="carousel-item active">
+            <img src="<?php echo base_url() ?>/assets/images/carousel-1.webp" alt="Image 1">
+            <div class="carousel-caption">
+                <h2>First Slide Title</h2>
+                <p>This is a description for the first slide.</p>
+                <!-- <a href="#" class="carousel-btn">Learn More</a> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="<?php echo base_url() ?>/assets/images/carousel2-.jpg" alt="Image 2">
+            <div class="carousel-caption">
+                <h2>Second Slide Title</h2>
+                <p>This is a description for the second slide.</p>
+                <!-- <a href="#" class="carousel-btn">Discover More</a> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="<?php echo base_url() ?>/assets/images/carousel-3.webp" alt="Image 3">
+            <div class="carousel-caption">
+                <h2>Third Slide Title</h2>
+                <p>This is a description for the third slide.</p>
+                <!-- <a href="#" class="carousel-btn">Explore More</a> -->
+            </div>
+        </div>
+        <a class="prev" onclick="changeSlide(-1)">❮</a>
+        <a class="next" onclick="changeSlide(1)">❯</a>
+    </div>
+
+
+    <!-- carousel ends here -->
+    <!-- slider starts here -->
+    <div class="brand-slider">
+        <div class="brand-slider-track">
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+
+
+
+        </div>
+    </div>
+
+    <!-- slider ends here -->
+
+
+    <!-- Horizontally Scrollable Cards Section -->
+    <div class="section-title">
+        <h3 class="slider-title">new arrivals</h3>
+    </div>
+
+    <section class="scrollable-cards" id="first-scrollable">
+
+        <div class="card-container">
+            <div class="card">
+
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <!-- Horizontally Scrollable Cards Section -->
+    <div class="section-title">
+        <h3 class="slider-title">on sale</h3>
+    </div>
+
+    <section class="scrollable-cards" id="second-scrollable">
+
+        <div class="card-container">
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <div class="section-title">
+        <h3 class="slider-title">amazing notes</h3>
+    </div>
+    <section class="scrollable-cards" id="third-scrollable">
+
+        <div class="card-container">
+            <div class="card main-note">
+                
+            </div>
+            <div class="card main-note">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                      
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card main-note">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+               
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                    
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card main-note">
+                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                      
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/artist.jpeg" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Quentin Bisch
+            </h2>
+            <h3>
+            Bisch is known for his bold and creative use of accords, and his ability to adapt his style to fit the brand he is working with. He has been called a "star perfumer" and is highly sought after in the industry. In an interview, Bisch discussed his passion for perfumery and the pressure and expectations that come with being a successful perfumer. He described himself as a perfectionist who is always seeking to achieve more and is constantly creating perfumes in his mind.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/original.jpeg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Kurkdjian
+            </h2>
+            <h3>In 2009, Kurkdjian co-founded Maison Francis Kurkdjian with Marc Chaya. The Maison represents a blend of traditional French perfumery and modern innovation, offering a "fragrance wardrobe" that allows individuals to express their personalities through scent. His notable creations for  his eponymous Maison include Baccarat Rouge 540 and Aqua Universalis.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/amouage.png" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            AMOUAGE LYRIC 
+            </h2>
+            <h3>thought that lyric was not for me, I found it suffocating, lacking in breath...until today.
+June 13, 6 pm, 23 degrees Celsius, the fiery rays of the sun penetrate the lake water but the rain from the past night raises a cool evening breeze, the perfect climate for lyric. A warm, velvety rose under the sun is suddenly refreshed by a splash of citrus. The soil beneath it, moist and fertile, allows green buds to bloom.
+Elegant, sweet but energetic..as a true man should be. I truly understand the reason for identifying it as a male fragrance.
+
+There are no failed creations by Chong, they simply reveal themselves with time.
+            
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/flower.jpg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Lincoln Rose
+            </h2>
+            <h3>the king of flowers, lemony fresh with various nuances of powder, wood notes or fruit, feminine, clean, intensely romantic
+            </h3>
+        </div>
+    </section>`);
+	showSlide(currentSlide);
 			//filling lists with data from API
 			newArrivalsList = data.filter(
 				(item) => item.status == 4 || item.status == 2
@@ -281,82 +592,82 @@ function loadHome() {
 			);
 			// console.log(featuredProductsList);
 
-			//clearing the containers
-			document.querySelector(
-				"#first-scrollable .card-container"
-			).innerHTML = ``;
-
-			//new arrivals
-			newArrivalsList.slice(0, 4).forEach((item) => {
+			// clearing the containers
 				document.querySelector(
-					" #first-scrollable .card-container"
-				).innerHTML += `<div class="card" value='${item.perfume_id}'>
+					"#first-scrollable .card-container"
+				).innerHTML = ``;
 
-            <img src="${item.perfume_image}" value='${item.perfume_id}'>
-            <div class="inner-card-text" value='${item.perfume_id}'>
-                <h3 value='${item.perfume_id}'>${
-					item.perfume_name.replace("-", " ").length < 20
-						? item.perfume_name.replace("-", " ")
-						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-				}</h3>
-                <div class="prices" value='${item.perfume_id}'>
-                    <p class="price">${item.price}$</p>
-                </div>
-            </div>
-            <button value='${item.perfume_id}'>View Details</button>
-        </div>`;
-			});
-			//clearing second card container
-			document.querySelector(
-				"#second-scrollable .card-container"
-			).innerHTML = ``;
-			//featured products
-			featuredProductsList.slice(0, 4).forEach((item) => {
-				document.querySelector(
-					" #second-scrollable .card-container"
-				).innerHTML += `<div class="card" value='${item.perfume_id}'>
-            <img src="${item.perfume_image}" alt="Product 1" value='${
-					item.perfume_id
-				}'>
-            <div class="discount-percentage" value='${
-							item.perfume_id
-						}'>${Math.floor(
-					((item.price - item.new_price) / item.price) * 100
-				)}% </div>
-            <div class="inner-card-text" value='${item.perfume_id}'>
-                <h3 value='${item.perfume_id}'>${
-					item.perfume_name.replace("-", " ").length < 20
-						? item.perfume_name.replace("-", " ")
-						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-				}</h3>
-                <div class="prices" value='${item.perfume_id}'>
-                    <p class="price" value='${item.perfume_id}'>${
-					item.price
-				}$</p>
-                    <p class="discounted" value='${item.perfume_id}'>${
-					item.new_price == null ? console.log("null") : item.new_price
-				}$</p>
-                </div>
-            </div>
+				//new arrivals
+				newArrivalsList.slice(0, 4).forEach((item) => {
+					document.querySelector(
+						" #first-scrollable .card-container"
+					).innerHTML += `<div class="card" value='${item.perfume_id}'>
 
-            <button value='${item.perfume_id}'>View Details</button>
-        </div>`;
-			});
-
-			// adding event listeners to cards
-
-			for (
-				let i = 0;
-				i <
-				newArrivalsList.slice(0, 4).length +
-					featuredProductsList.slice(0, 4).length;
-				i++
-			) {
-				document.querySelectorAll(".card")[i].addEventListener("click", (e) => {
-					singleItemShow(e.target.getAttribute("value"));
-					console.log(e.target.getAttribute("value"));
+			    <img src="${item.perfume_image}" value='${item.perfume_id}'>
+			    <div class="inner-card-text" value='${item.perfume_id}'>
+			        <h3 value='${item.perfume_id}'>${
+						item.perfume_name.replace("-", " ").length < 20
+							? item.perfume_name.replace("-", " ")
+							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+					}</h3>
+			        <div class="prices" value='${item.perfume_id}'>
+			            <p class="price">${item.price}$</p>
+			        </div>
+			    </div>
+			    <button value='${item.perfume_id}'>View Details</button>
+			</div>`;
 				});
-			}
+				//clearing second card container
+				document.querySelector(
+					"#second-scrollable .card-container"
+				).innerHTML = ``;
+				//featured products
+				featuredProductsList.slice(0, 4).forEach((item) => {
+					document.querySelector(
+						" #second-scrollable .card-container"
+					).innerHTML += `<div class="card" value='${item.perfume_id}'>
+			    <img src="${item.perfume_image}" alt="Product 1" value='${
+						item.perfume_id
+					}'>
+			    <div class="discount-percentage" value='${
+								item.perfume_id
+							}'>${Math.floor(
+						((item.price - item.new_price) / item.price) * 100
+					)}% </div>
+			    <div class="inner-card-text" value='${item.perfume_id}'>
+			        <h3 value='${item.perfume_id}'>${
+						item.perfume_name.replace("-", " ").length < 20
+							? item.perfume_name.replace("-", " ")
+							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+					}</h3>
+			        <div class="prices" value='${item.perfume_id}'>
+			            <p class="price" value='${item.perfume_id}'>${
+						item.price
+					}$</p>
+			            <p class="discounted" value='${item.perfume_id}'>${
+						item.new_price == null ? console.log("null") : item.new_price
+					}$</p>
+			        </div>
+			    </div>
+
+			    <button value='${item.perfume_id}'>View Details</button>
+			</div>`;
+				});
+
+				// adding event listeners to cards
+
+				for (
+					let i = 0;
+					i <
+					newArrivalsList.slice(0, 4).length +
+						featuredProductsList.slice(0, 4).length;
+					i++
+				) {
+					document.querySelectorAll(".card")[i].addEventListener("click", (e) => {
+						singleItemShow(e.target.getAttribute("value"));
+						console.log(e.target.getAttribute("value"));
+					});
+				}
 
 			// Debounce function
 			function debounce(func, delay) {
@@ -2351,6 +2662,17 @@ function getCart() {
 }
 
 function showNewArrivalsScreen() {
+	//
+	//
+	//
+	//
+
+
+	
+	const stateObject = { section: 'new arrival' };
+	userMovement.push(stateObject);
+	window.history.pushState(stateObject, '', 'new-arrival');	
+
 	previousScreen = "newArrivals";
 	clearDOM();
 	$("#second-header-popup").fadeOut();
@@ -2490,7 +2812,89 @@ function showNewArrivalsScreen() {
 			renderSearchResults(filteredResults);
 		});
 }
+
+
+
+
+
+
+//
+//
+
+let userMovement=[];
+
+
+
+
+
+
+window.addEventListener('popstate', function(event) {
+	// event.preventDefault;
+	console.log('back pressed');
+	
+	
+		console.log(event.state);
+		console.log(event.state.section);
+		console.log(userMovement[userMovement.length -2].section);
+		
+		switch (userMovement[userMovement.length -2].section) {
+			case 'on sale':
+				console.log
+				('you are now on the ');
+				// loadHome();
+				showOnSalePerfumesScreen();
+
+				break;
+			case 'main':
+				console.log
+				('you are now on the main page');
+				loadHome();
+				// showOnSalePerfumesScreen();
+
+				break;
+				
+			case 'new arrival':
+				console.log(' new arrival page.');
+				showNewArrivalsScreen();
+				break;
+			case 'allperfumes':
+				console.log('You are back on the all perfumes page.');
+				showAllPerfumesScreen();	
+				break;
+			case 'services':
+				console.log('You are back on the Services page.');
+				break;
+			default:
+				console.log('Unknown page.');
+		}
+
+});
+
+
+
+
+
+//
+//
+//
+//
 function showOnSalePerfumesScreen() {
+	//
+	//
+	//
+	//
+	//
+	const stateObject = { section: 'on sale' };
+	userMovement.push(stateObject);
+
+	window.history.pushState(stateObject, '', 'on-sale');
+	// console.log('You are now on the Home page.');
+
+
+	//
+	//
+	//
+	//
 	previousScreen = "onSalePerfumes";
 	clearDOM();
 	$("#second-header-popup").fadeOut();
@@ -2631,6 +3035,12 @@ function showOnSalePerfumesScreen() {
 		});
 }
 function showAllPerfumesScreen() {
+
+	const stateObject = { section: 'allperfumes' };
+	userMovement.push(stateObject);
+	window.history.pushState(stateObject, '', 'all-perfumes');
+	console.log(userMovement);
+	
 	previousScreen = "allPerfumes";
 	clearDOM();
 	$("#second-header-popup").fadeOut();

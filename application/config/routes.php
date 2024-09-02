@@ -78,7 +78,7 @@ $route['get_all_notes'] = 'returner/get_notes';
 //usage example: api.com/search/p.id/1/10/0 will show the perfume with id no.1.. 10 items per page and from the first item
 $route['search/(:any)/(:any)/(:num)/(:num)'] = 'returner/search/$1/$2/$3/$4';
 //whatever is not matched in the above routes will be shown as a page.. if it is not there.. error404 will appear.. check the mentioned function if u need
-$route['(:any)'] = 'pages/view/$1';
+$route['(:any)'] = 'pages/view';
 
 
 
