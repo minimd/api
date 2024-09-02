@@ -9,10 +9,7 @@ $(".second-nav").hide();
 $("#search-input").on("click", function () {
 	$("#search-input").toggleClass("toggle-border");
 });
-$("h1").click(function (e) {
-	e.preventDefault();
-	window.location.reload();
-});
+
 
 $("#search-btn").click(function (e) {
 	// e.preventDefault();
@@ -45,23 +42,32 @@ $("#search-bar").on("input", function () {
 //black header
 $("#home-nav").click(function (e) {
 	e.preventDefault();
-	window.location.reload();
+	const stateObject = { section: "main" };
+	window.history.pushState(stateObject, "", "main");
+	loadHome();
+	// window.location.reload();
 });
 $("h1").click(function (e) {
 	e.preventDefault();
-	window.location.reload();
+	const stateObject = { section: "main" };
+	window.history.pushState(stateObject, "", "main");
+	loadHome();
+	// window.location.reload();
 });
 $("p#cart").click(function (e) {
+	const stateObject = { section: "cart" };
+	window.history.pushState(stateObject, "", "cart");
 	showCartScreen();
 });
 $("#cart-div img").click(function (e) {
+	const stateObject = { section: "cart" };
+	window.history.pushState(stateObject, "", "cart");
 	showCartScreen();
 });
 
 //carousel
 
 let currentSlide = 0;
-
 
 function showSlide(index) {
 	const slides = document.querySelectorAll(".carousel-item");
@@ -76,7 +82,6 @@ function changeSlide(n) {
 }
 
 //slider
-
 
 //fuck the slider
 
@@ -106,30 +111,48 @@ $(".header-nav").hover(
 );
 //mens
 $(".men-key").click(function (e) {
+	const stateObject = { section: "men" };
+	window.history.pushState(stateObject, "", "men-perfumes");
 	showMenPerfumesScreen();
 });
 $(".women-key").click(function (e) {
+	const stateObject = { section: "women" };
+	window.history.pushState(stateObject, "", "women-perfumes");
 	showWomenPerfumesScreen();
 });
 $(".unisex-key").click(function (e) {
+	const stateObject = { section: "unisex" };
+	window.history.pushState(stateObject, "", "unisex-perfumes");
 	showUnisexPerfumesScreen();
 });
 $(".testers-key").click(function (e) {
+	const stateObject = { section: "testers" };
+	window.history.pushState(stateObject, "", "testers");
 	showTestersPerfumesScreen();
 });
 $(".unboxed-key").click(function (e) {
+	const stateObject = { section: "unboxed" };
+	window.history.pushState(stateObject, "", "unboxed");
 	showUnboxedPerfumesScreen();
 });
 $(".rares-key").click(function (e) {
+	const stateObject = { section: "rares" };
+	window.history.pushState(stateObject, "", "rare-perfumes");
 	showRarePerfumesScreen();
 });
 $("#new-arrivals-nav").click(function (e) {
+	const stateObject = { section: "new arrival" };
+	window.history.pushState(stateObject, "", "new-arrival");
 	showNewArrivalsScreen();
 });
 $("#best-sellers-nav").click(function (e) {
+	const stateObject = { section: "best-sellers" };
+	window.history.pushState(stateObject, "", "on-sale");
 	showOnSalePerfumesScreen();
 });
 $("#all-perfumes-nav").click(function (e) {
+	const stateObject = { section: "all-perfumes" };
+	window.history.pushState(stateObject, "", "all-perfumes");
 	showAllPerfumesScreen();
 });
 
@@ -142,125 +165,6 @@ let searchBarResults;
 
 //fetching the brands
 //fetching the brands
-fetch("http://localhost/api/get_all_brands", {}).then((response) =>
-	response.json().then((data) => {
-		brandsList = data;
-
-		document.querySelector(
-			".popup-results"
-		).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
-
-		// re-happens if the button is clicked
-		document
-			.querySelector(".brands-key")
-			.addEventListener("click", function (e) {
-				document.querySelector(
-					".popup-results"
-				).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
-
-				brandsToShow.forEach((brand) => {
-					document.querySelector(".popup-results").innerHTML += `
-				<div class="popup-result-item" value='${brand.id}'>
-					<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
-				</div>`;
-				});
-
-				for (let i = 0; i < brandsToShow.length; i++) {
-					document
-						.querySelectorAll(".popup-result-item")
-						[i].addEventListener("click", function (e) {
-							searchByBrandScreen(e.target.getAttribute("value"));
-						});
-				}
-				$("#show-all-brands").click(function (e) {
-					showAllBrandsScreen();
-				});
-			});
-
-		// Limit the number of brands to 8
-		const brandsToShow = brandsList.slice(0, 8);
-
-		brandsToShow.forEach((brand) => {
-			document.querySelector(".popup-results").innerHTML += `
-            <div class="popup-result-item" value='${brand.id}'>
-                <img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
-            </div>`;
-		});
-		for (let i = 0; i < brandsToShow.length; i++) {
-			document
-				.querySelectorAll(".popup-result-item")
-				[i].addEventListener("click", function (e) {
-					searchByBrandScreen(e.target.getAttribute("value"));
-				});
-		}
-		$("#show-all-brands").click(function (e) {
-			e.preventDefault();
-			showAllBrandsScreen();
-		});
-	})
-);
-fetch("http://localhost/api/get_all_notes", {}).then((response) =>
-	response.json().then((data) => {
-		// console.log(data);
-
-		notesList = data;
-
-		// re-happens if the button is clicked
-		document
-			.querySelector(".notes-key")
-			.addEventListener("click", function (e) {
-				document.querySelector(
-					".popup-results"
-				).innerHTML = `<button class= 'show-all-nav' id='show-all-notes'>Show all notes</button>`;
-				notesToShow.forEach((note) => {
-					document.querySelector(".popup-results").innerHTML += `
-    <div class="popup-result-item" value='${note.id}'>
-        <img src="${note.note_image}" alt="${note.name}" value='${note.name}'>
-        <span>${note.name}</span>
-    </div>`;
-				});
-				for (let i = 0; i < notesToShow.length; i++) {
-					document
-						.querySelectorAll(".popup-result-item")
-						[i].addEventListener("click", function (e) {
-							showPerfumesByNote(e.target.getAttribute("value"));
-						});
-				}
-
-				$("#show-all-notes").click(function (e) {
-					e.preventDefault();
-					showAllNotesScreen();
-				});
-			});
-
-		// Limit the number of brands to 8
-		const notesToShow = notesList.slice(0, 17);
-		const mainScreenNotes = notesToShow.slice(0, 4);
-		// mainScreenNotes.forEach((note, i) => {
-		// 	console.log(mainScreenNotes);
-			
-		// 	document.querySelectorAll('.main-note')[i].innerHTML = 
-		// 	`<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
-                
-        //         <div class="inner-card-text">
-        //             <h3 value='${note.name}'>${note.name}</h3>
-                    
-        //         </div>
-
-        //         <button value='${note.name}'>view perfumes</button>`
-		// });
-		// for (let i = 0; i < mainScreenNotes.length; i++) {
-		// 	document
-        //         .querySelectorAll(".main-note button")
-        //         [i].addEventListener("click", function (e) {
-        //             showPerfumesByNote(e.target.getAttribute("value"));
-		// 			console.log(e.target.getAttribute("value"));
-					
-        //         });
-		// }
-		
-	})
-);
 
 //ultimate fetch
 let allPerfumes;
@@ -268,22 +172,176 @@ let allPerfumes;
 function loadHome() {
 	fetch(`http://localhost/api/search/all`, {}).then((response) =>
 		response.json().then((data) => {
+			fetch("http://localhost/api/get_all_brands", {}).then((response) =>
+				response.json().then((data) => {
+					brandsList = data;
+
+					document.querySelector(
+						".popup-results"
+					).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
+
+					// re-happens if the button is clicked
+					document
+						.querySelector(".brands-key")
+						.addEventListener("click", function (e) {
+							document.querySelector(
+								".popup-results"
+							).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
+
+							brandsToShow.forEach((brand) => {
+								document.querySelector(".popup-results").innerHTML += `
+							<div class="popup-result-item" value='${brand.id}'>
+								<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
+							</div>`;
+							});
+
+							for (let i = 0; i < brandsToShow.length; i++) {
+								document
+									.querySelectorAll(".popup-result-item")
+									[i].addEventListener("click", function (e) {
+										const stateObject = {
+											section: "brand",
+											param: e.target.getAttribute("value"),
+										};
+										
+										
+										console.log(stateObject);
+										window.history.pushState(stateObject, "", "brand");
+										searchByBrandScreen(e.target.getAttribute("value"));
+									});
+							}
+							$("#show-all-brands").click(function (e) {
+								const stateObject = { section: "brands" };
+								window.history.pushState(stateObject, "", "all-brands");
+								showAllBrandsScreen();
+							});
+						});
+
+					// Limit the number of brands to 8
+					const brandsToShow = brandsList.slice(0, 8);
+
+					brandsToShow.forEach((brand) => {
+						document.querySelector(".popup-results").innerHTML += `
+						<div class="popup-result-item" value='${brand.id}'>
+							<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
+						</div>`;
+					});
+					for (let i = 0; i < brandsToShow.length; i++) {
+						document
+							.querySelectorAll(".popup-result-item")
+							[i].addEventListener("click", function (e) {
+								const stateObject = {
+									section: "brand",
+									param: e.target.getAttribute("value"),
+								};
+								
+								
+								console.log(stateObject);
+								window.history.pushState(stateObject, "", "brand");
+								searchByBrandScreen(e.target.getAttribute("value"));
+							});
+					}
+					$("#show-all-brands").click(function (e) {
+						const stateObject = { section: "brands" };
+						window.history.pushState(stateObject, "", "all-brands");
+						e.preventDefault();
+						showAllBrandsScreen();
+					});
+				})
+			);
+			fetch("http://localhost/api/get_all_notes", {}).then((response) =>
+				response.json().then((data) => {
+					// console.log(data);
+
+					notesList = data;
+
+					// re-happens if the button is clicked
+					document
+						.querySelector(".notes-key")
+						.addEventListener("click", function (e) {
+							document.querySelector(
+								".popup-results"
+							).innerHTML = `<button class= 'show-all-nav' id='show-all-notes'>Show all notes</button>`;
+							notesToShow.forEach((note) => {
+								document.querySelector(".popup-results").innerHTML += `
+				<div class="popup-result-item" value='${note.id}'>
+					<img src="${note.note_image}" alt="${note.name}" value='${note.name}'>
+					<span value='${note.name}'>${note.name}</span>
+				</div>`;
+							});
+							for (let i = 0; i < notesToShow.length; i++) {
+								document
+									.querySelectorAll(".popup-result-item")
+									[i].addEventListener("click", function (e) {
+										const stateObject = {
+											section: "note",
+											param: e.target.getAttribute("value"),
+										};
+										
+										
+										console.log(stateObject);
+										window.history.pushState(stateObject, "", "note");
+										showPerfumesByNote(e.target.getAttribute("value"));
+									});
+							}
+
+							$("#show-all-notes").click(function (e) {
+								const stateObject = { section: "notes" };
+								window.history.pushState(stateObject, "", "all-notes");
+								e.preventDefault();
+								showAllNotesScreen();
+							});
+						});
+
+					// Limit the number of brands to 8
+					const notesToShow = notesList.slice(0,14);
+					const mainScreenNotes = notesToShow.slice(0, 4);
+					mainScreenNotes.forEach((note, i) => {
+						console.log(mainScreenNotes);
+
+						document.querySelectorAll(".main-note")[
+							i
+						].innerHTML = `<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
+							
+					        <div class="inner-card-text">
+					            <h3 value='${note.name}'>${note.name}</h3>
+								
+					        </div>
+			
+					        <button value='${note.name}'>view perfumes</button>`;
+					});
+					for (let i = 0; i < mainScreenNotes.length; i++) {
+						document
+							.querySelectorAll(".main-note button")
+							[i].addEventListener("click", function (e) {
+								const stateObject = {
+									section: "note",
+									param: e.target.getAttribute("value"),
+								};
+								
+								
+								console.log(stateObject);
+								window.history.pushState(stateObject, "", "note");
+								showPerfumesByNote(e.target.getAttribute("value"));
+								console.log(e.target.getAttribute("value"));
+							});
+					}
+				})
+			);
 			allPerfumes = data;
 			console.log(data);
-			console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
-			const stateObject = { section: 'main' };
-			userMovement.push(stateObject);
-			window.history.pushState(stateObject, '', 'all-perfumes');
+			console.log(
+				"suiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+			);
 
-	window.history.pushState(stateObject, '', 'main');
-	//
-	//
-	//
-	//
-$('.all').html(`
+			//
+			//
+			//
+			//
+			$(".all").html(`
     <div class="carousel">
         <div class="carousel-item active">
-            <img src="<?php echo base_url() ?>/assets/images/carousel-1.webp" alt="Image 1">
+            <img src="http://localhost/api/assets/images/carousel-1.webp" alt="Image 1">
             <div class="carousel-caption">
                 <h2>First Slide Title</h2>
                 <p>This is a description for the first slide.</p>
@@ -291,7 +349,7 @@ $('.all').html(`
             </div>
         </div>
         <div class="carousel-item">
-            <img src="<?php echo base_url() ?>/assets/images/carousel2-.jpg" alt="Image 2">
+            <img src="http://localhost/api/assets/images/carousel2-.jpg" alt="Image 2">
             <div class="carousel-caption">
                 <h2>Second Slide Title</h2>
                 <p>This is a description for the second slide.</p>
@@ -299,7 +357,7 @@ $('.all').html(`
             </div>
         </div>
         <div class="carousel-item">
-            <img src="<?php echo base_url() ?>/assets/images/carousel-3.webp" alt="Image 3">
+            <img src="http://localhost/api/assets/images/carousel-3.webp" alt="Image 3">
             <div class="carousel-caption">
                 <h2>Third Slide Title</h2>
                 <p>This is a description for the third slide.</p>
@@ -315,46 +373,46 @@ $('.all').html(`
     <!-- slider starts here -->
     <div class="brand-slider">
         <div class="brand-slider-track">
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="<?php echo base_url() ?>/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
 
 
 
@@ -374,7 +432,7 @@ $('.all').html(`
         <div class="card-container">
             <div class="card">
 
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
                     <div class="prices">
@@ -384,18 +442,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
-                <div class="inner-card-text">
-                    <h3>Product 1</h3>
-                    <div class="prices">
-                        <p class="price">40$</p>
-                    </div>
-                </div>
-
-                <button>View Details</button>
-            </div>
-            <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
                     <div class="prices">
@@ -406,7 +453,18 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
                     <div class="prices">
@@ -428,7 +486,7 @@ $('.all').html(`
 
         <div class="card-container">
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="discount-percentage">25% </div>
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -441,7 +499,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="discount-percentage">25% </div>
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -454,7 +512,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="discount-percentage">25% </div>
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -467,7 +525,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 <div class="discount-percentage">25% </div>
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -493,7 +551,7 @@ $('.all').html(`
                 
             </div>
             <div class="card main-note">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -505,7 +563,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card main-note">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -517,7 +575,7 @@ $('.all').html(`
                 <button>View Details</button>
             </div>
             <div class="card main-note">
-                <img src="<?php echo base_url() ?>/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
                 
                 <div class="inner-card-text">
                     <h3>Product 1</h3>
@@ -533,7 +591,7 @@ $('.all').html(`
         </div>
     </section>
     <section id="" class="artist">
-        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/artist.jpeg" alt=""></div>
+        <div class="artist-image"><img src="http://localhost/api/assets/images/artist.jpeg" alt=""></div>
 
         <div class="artist-quote">
             <h2 id="" class="artist">
@@ -545,7 +603,7 @@ $('.all').html(`
         </div>
     </section>
     <section id="" class="artist right">
-        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/original.jpeg" alt="" class="r80"></div>
+        <div class="artist-image"><img src="http://localhost/api/assets/images/original.jpeg" alt="" class="r80"></div>
 
         <div class="artist-quote">
             <h2 id="" class="artist">
@@ -556,7 +614,7 @@ $('.all').html(`
         </div>
     </section>
     <section id="" class="artist">
-        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/amouage.png" alt=""></div>
+        <div class="artist-image"><img src="http://localhost/api/assets/images/amouage.png" alt=""></div>
 
         <div class="artist-quote">
             <h2 id="" class="artist">
@@ -572,7 +630,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
         </div>
     </section>
     <section id="" class="artist right">
-        <div class="artist-image"><img src="<?php echo base_url() ?>/assets/images/flower.jpg" alt="" class="r80"></div>
+        <div class="artist-image"><img src="http://localhost/api/assets/images/flower.jpg" alt="" class="r80"></div>
 
         <div class="artist-quote">
             <h2 id="" class="artist">
@@ -582,7 +640,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
             </h3>
         </div>
     </section>`);
-	showSlide(currentSlide);
+			showSlide(currentSlide);
 			//filling lists with data from API
 			newArrivalsList = data.filter(
 				(item) => item.status == 4 || item.status == 2
@@ -593,81 +651,81 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 			// console.log(featuredProductsList);
 
 			// clearing the containers
-				document.querySelector(
-					"#first-scrollable .card-container"
-				).innerHTML = ``;
+			document.querySelector(
+				"#first-scrollable .card-container"
+			).innerHTML = ``;
 
-				//new arrivals
-				newArrivalsList.slice(0, 4).forEach((item) => {
-					document.querySelector(
-						" #first-scrollable .card-container"
-					).innerHTML += `<div class="card" value='${item.perfume_id}'>
+			//new arrivals
+			newArrivalsList.slice(0, 4).forEach((item) => {
+				document.querySelector(
+					" #first-scrollable .card-container"
+				).innerHTML += `<div class="card" value='${item.perfume_id}'>
 
 			    <img src="${item.perfume_image}" value='${item.perfume_id}'>
 			    <div class="inner-card-text" value='${item.perfume_id}'>
 			        <h3 value='${item.perfume_id}'>${
-						item.perfume_name.replace("-", " ").length < 20
-							? item.perfume_name.replace("-", " ")
-							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-					}</h3>
+					item.perfume_name.replace("-", " ").length < 20
+						? item.perfume_name.replace("-", " ")
+						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+				}</h3>
 			        <div class="prices" value='${item.perfume_id}'>
 			            <p class="price">${item.price}$</p>
 			        </div>
 			    </div>
 			    <button value='${item.perfume_id}'>View Details</button>
 			</div>`;
-				});
-				//clearing second card container
+			});
+			//clearing second card container
+			document.querySelector(
+				"#second-scrollable .card-container"
+			).innerHTML = ``;
+			//featured products
+			featuredProductsList.slice(0, 4).forEach((item) => {
 				document.querySelector(
-					"#second-scrollable .card-container"
-				).innerHTML = ``;
-				//featured products
-				featuredProductsList.slice(0, 4).forEach((item) => {
-					document.querySelector(
-						" #second-scrollable .card-container"
-					).innerHTML += `<div class="card" value='${item.perfume_id}'>
-			    <img src="${item.perfume_image}" alt="Product 1" value='${
-						item.perfume_id
-					}'>
-			    <div class="discount-percentage" value='${
-								item.perfume_id
-							}'>${Math.floor(
-						((item.price - item.new_price) / item.price) * 100
-					)}% </div>
+					" #second-scrollable .card-container"
+				).innerHTML += `<div class="card" value='${item.perfume_id}'>
+			    <img src="${item.perfume_image}" alt="Product 1" value='${item.perfume_id}'>
+			    <div class="discount-percentage" value='${item.perfume_id}'>${Math.floor(
+					((item.price - item.new_price) / item.price) * 100
+				)}% </div>
 			    <div class="inner-card-text" value='${item.perfume_id}'>
 			        <h3 value='${item.perfume_id}'>${
-						item.perfume_name.replace("-", " ").length < 20
-							? item.perfume_name.replace("-", " ")
-							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-					}</h3>
+					item.perfume_name.replace("-", " ").length < 20
+						? item.perfume_name.replace("-", " ")
+						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+				}</h3>
 			        <div class="prices" value='${item.perfume_id}'>
-			            <p class="price" value='${item.perfume_id}'>${
-						item.price
-					}$</p>
+			            <p class="price" value='${item.perfume_id}'>${item.price}$</p>
 			            <p class="discounted" value='${item.perfume_id}'>${
-						item.new_price == null ? console.log("null") : item.new_price
-					}$</p>
+					item.new_price == null ? console.log("null") : item.new_price
+				}$</p>
 			        </div>
 			    </div>
 
 			    <button value='${item.perfume_id}'>View Details</button>
 			</div>`;
+			});
+
+			// adding event listeners to cards
+
+			for (
+				let i = 0;
+				i <
+				newArrivalsList.slice(0, 4).length +
+					featuredProductsList.slice(0, 4).length;
+				i++
+			) {
+				document.querySelectorAll(".card")[i].addEventListener("click", (e) => {
+					singleItemShow(e.target.getAttribute("value"));
+					const stateObject = {
+						section: "single",
+						param: e.target.getAttribute("value"),
+					};
+
+					window.history.pushState(stateObject, "", "item");
+					console.log(stateObject);
 				});
-
-				// adding event listeners to cards
-
-				for (
-					let i = 0;
-					i <
-					newArrivalsList.slice(0, 4).length +
-						featuredProductsList.slice(0, 4).length;
-					i++
-				) {
-					document.querySelectorAll(".card")[i].addEventListener("click", (e) => {
-						singleItemShow(e.target.getAttribute("value"));
-						console.log(e.target.getAttribute("value"));
-					});
-				}
+			}
 
 			// Debounce function
 			function debounce(func, delay) {
@@ -679,9 +737,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 			}
 			// Search function
 			function searchByName() {
-				document.querySelector(
-					".search-popup-container"
-				).innerHTML ='';
+				document.querySelector(".search-popup-container").innerHTML = "";
 
 				let searchInput = document.getElementById("search-bar").value;
 				if (searchInput === "") {
@@ -713,7 +769,6 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 
 				// Here you can add code to display the search results
 
-				
 				miniSearchItems.forEach((item) => {
 					document.querySelector(".search-popup-container").innerHTML += `
 		<div class="search-item" value='${item.perfume_id}'>
@@ -754,6 +809,14 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 				// Add event listener to the search items
 				document.querySelectorAll(".search-item").forEach((item) => {
 					item.addEventListener("click", (e) => {
+						const stateObject = {
+							section: "single",
+							param: e.target.getAttribute("value"),
+						};
+						
+						
+						console.log(stateObject);
+						window.history.pushState(stateObject, "", "item");
 						e.preventDefault();
 						singleItemShow(e.target.getAttribute("value"));
 
@@ -914,7 +977,17 @@ function singleItemShow(perfumeId) {
                 <div class='line description-line'></div>
                 <div class="description">
                     <h4>Description</h4>
-                    <p>${selectedPerfume.description} this item is ${selectedPerfume.box =='0' ? 'new.':selectedPerfume.box=='1'? 'a tester' : selectedPerfume.box=='2'? 'unboxed':selectedPerfume.box=='3'? 'rare':null}</p>
+                    <p>${selectedPerfume.description} this item is ${
+			selectedPerfume.box == "0"
+				? "new."
+				: selectedPerfume.box == "1"
+				? "a tester"
+				: selectedPerfume.box == "2"
+				? "unboxed"
+				: selectedPerfume.box == "3"
+				? "rare"
+				: null
+		}</p>
                 </div>
 				<div class='line similar-perfumes-line'></div>
                 ${similarPerfumesHtml}
@@ -1029,13 +1102,23 @@ function singleItemShow(perfumeId) {
 				}
 			});
 		});
-//event listener for the "similar perfumes" button
-		document.querySelectorAll(".similar-perfumes-container .view-details").forEach((button) => {
-            button.addEventListener("click", function () {
-                const perfumeId = this.closest(".perfume-card").dataset.id;
-                singleItemShow(perfumeId);
-            });
-        });
+		//event listener for the "similar perfumes" button
+		document
+			.querySelectorAll(".similar-perfumes-container .view-details")
+			.forEach((button) => {
+				button.addEventListener("click", function () {
+					const perfumeId = this.closest(".perfume-card").dataset.id;
+					const stateObject = {
+						section: "single",
+						param: perfumeId,
+					};
+					console.log(stateObject);
+					
+
+					window.history.pushState(stateObject, "", "item");
+					singleItemShow(perfumeId);
+				});
+			});
 
 		// Add event listener for the "Add to Cart" button
 		document
@@ -1084,6 +1167,14 @@ function singleItemShow(perfumeId) {
 
 			// Show cart popup for feedback to the user
 			showCartPopup(formattedPerfumeName, selectedSize + " $", quantity, price);
+			const stateObject = {
+				section: "cart",
+				
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "cart");
 			showCartScreen();
 		});
 	}
@@ -1195,12 +1286,15 @@ function searchNameScreen(term) {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				document.body.innerHTML += `<button class= 'show-all-nav' id='back'><img src='https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff'/></button>`;
 
-				$("#back").click(function (e) {
-					searchNameScreen(previousScreen);
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				console.log(stateObject);
+				
+
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1329,26 +1423,14 @@ function searchByBrandScreen(brandId) {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
 				// Create the button element
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				console.log(stateObject);
+				
 
-				// Create the image element
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-
-				// Append the image to the button
-				button.appendChild(img);
-
-				// Append the button to the body
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					searchByBrandScreen(previousScreen);
-
-					$("#back").remove();
-				});
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1441,7 +1523,16 @@ function showAllBrandsScreen() {
 		.querySelectorAll("#all-brands-container .perfume-card")
 		.forEach((card) => {
 			card.addEventListener("click", function (e) {
+				const stateObject = {
+					section: "brand",
+					param: this.dataset.id,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "brand");
 				searchByBrandScreen(this.dataset.id);
+				
 			});
 		});
 }
@@ -1497,21 +1588,14 @@ function showPerfumesByNote(noteName) {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showPerfumesByNote(noteName);
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1608,7 +1692,17 @@ function showAllNotesScreen() {
             </div>
             <button value="${note.id}">View Perfumes</button>
         `;
-		noteCard.addEventListener("click", () => showPerfumesByNote(note.name));
+		noteCard.addEventListener("click", () =>{
+			const stateObject = {
+				section: "note",
+				param: note.name,
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "note");
+			
+			showPerfumesByNote(note.name)});
 		container.appendChild(noteCard);
 	});
 
@@ -1684,19 +1778,15 @@ function showMenPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showMenPerfumesScreen();
-					$("#back").remove();
-				});
+				
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1820,19 +1910,14 @@ function showWomenPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showWomenPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1954,19 +2039,14 @@ function showUnisexPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showUnisexPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2092,19 +2172,14 @@ function showTestersPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showTestersPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2230,19 +2305,14 @@ function showUnboxedPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showUnboxedPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2368,19 +2438,14 @@ function showRarePerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showRarePerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2520,11 +2585,15 @@ function showCartScreen() {
 	// Event listeners for quantity buttons
 	document.querySelectorAll(".quantity-btn").forEach((button) => {
 		button.addEventListener("click", function (e) {
+			console.log('pressed');
+		
+			
+			// showCartScreen();
 			const index = parseInt(this.getAttribute("data-index"));
 			const action = this.getAttribute("data-action");
 			updateCartQuantity(index, action);
-			updateItemPrice(index); // Update the price for this item
 			showCartScreen(); // Re-render the cart screen to reflect changes
+			updateItemPrice(index); // Update the price for this item
 		});
 	});
 
@@ -2532,6 +2601,14 @@ function showCartScreen() {
 	document.querySelectorAll(".view-item").forEach((button) => {
 		button.addEventListener("click", function (e) {
 			const perfumeId = this.getAttribute("data-id");
+			const stateObject = {
+				section: "single",
+				param: perfumeId,
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "item");
 			singleItemShow(perfumeId);
 		});
 	});
@@ -2588,15 +2665,19 @@ function showCartScreen() {
 									.then((res) => {
 										bot
 											.sendMessage("phone number: " + $("#phone-number").val())
-											.then((res) => {currenrCard.forEach((obj, index) => {
-												bot.sendMessage(JSON.stringify(currenrCard[index])).then((res) => {});
-											});});
+											.then((res) => {
+												currenrCard.forEach((obj, index) => {
+													bot
+														.sendMessage(JSON.stringify(currenrCard[index]))
+														.then((res) => {});
+												});
+											});
 									});
 							});
 						});
 					});
 				});
-				
+
 				localStorage.removeItem("cart");
 				alert("Order submitted successfully!");
 			} else {
@@ -2610,9 +2691,12 @@ function updateCartQuantity(index, action) {
 	if (action === "increase") {
 		cart[index].quantity++;
 	} else if (action === "decrease") {
-		cart[index].quantity--;
-		if (cart[index].quantity <= 0) {
-			cart.splice(index, 1); // Remove the item if quantity is 0 or less
+		if (cart[index].quantity <= 1) {
+			cart.splice(index, 1);
+			showCartScreen();
+			 // Remove the item if quantity is 0 or less
+		}
+		else{		cart[index].quantity--;
 		}
 	}
 	localStorage.setItem("cart", JSON.stringify(cart));
@@ -2666,12 +2750,6 @@ function showNewArrivalsScreen() {
 	//
 	//
 	//
-
-
-	
-	const stateObject = { section: 'new arrival' };
-	userMovement.push(stateObject);
-	window.history.pushState(stateObject, '', 'new-arrival');	
 
 	previousScreen = "newArrivals";
 	clearDOM();
@@ -2741,19 +2819,14 @@ function showNewArrivalsScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showNewArrivalsScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2813,66 +2886,96 @@ function showNewArrivalsScreen() {
 		});
 }
 
-
-
-
-
-
 //
 //
 
-let userMovement=[];
+let userMovement = [];
 
-
-
-
-
-
-window.addEventListener('popstate', function(event) {
+window.addEventListener("popstate", function (event) {
 	// event.preventDefault;
-	console.log('back pressed');
-	
-	
-		console.log(event.state);
-		console.log(event.state.section);
-		console.log(userMovement[userMovement.length -2].section);
-		
-		switch (userMovement[userMovement.length -2].section) {
-			case 'on sale':
-				console.log
-				('you are now on the ');
-				// loadHome();
-				showOnSalePerfumesScreen();
+	console.log("back pressed");
 
-				break;
-			case 'main':
-				console.log
-				('you are now on the main page');
-				loadHome();
-				// showOnSalePerfumesScreen();
+	console.log(event.state);
+	console.log(event.state.section);
+	// console.log(userMovement[userMovement.length - 2].section);
 
-				break;
-				
-			case 'new arrival':
-				console.log(' new arrival page.');
-				showNewArrivalsScreen();
-				break;
-			case 'allperfumes':
-				console.log('You are back on the all perfumes page.');
-				showAllPerfumesScreen();	
-				break;
-			case 'services':
-				console.log('You are back on the Services page.');
-				break;
-			default:
-				console.log('Unknown page.');
-		}
+	switch (event.state.section) {
+		case "main":
+			console.log("you are now on the main page");
+			loadHome();
+			// showOnSalePerfumesScreen();
 
+			break;
+
+		case "cart":
+			console.log("You are back on the cart page.");
+			showCartScreen();
+			break;
+		case "allperfumes":
+			console.log("You are back on the all perfumes page.");
+			showAllPerfumesScreen();
+			break;
+		case "men":
+			console.log("You are back on the men perfumes page.");
+			showMenPerfumesScreen();
+			break;
+		case "women":
+			console.log("You are back on the women perfumes page.");
+			showWomenPerfumesScreen();
+			break;
+		case "unisex":
+			console.log("You are back on the unisex perfumes page.");
+			showUnisexPerfumesScreen();
+			break;
+		case "testers":
+			console.log("You are back on the testers perfumes page.");
+			showTestersPerfumesScreen();
+			break;
+		case "unboxed":
+			console.log("You are back on the unboxed perfumes page.");
+			showUnboxedPerfumesScreen();
+			break;
+		case "rares":
+			console.log("You are back on the rares page.");
+			showRarePerfumesScreen();
+			break;
+		case "new arrival":
+			console.log("You are back on the new arrival page.");
+			showNewArrivalsScreen();
+			break;
+		case "best-sellers":
+			console.log("You are back on the best sellers page.");
+			showOnSalePerfumesScreen();
+			break;
+		case "all-perfumes":
+			console.log("You are back on the all perfumes page.");
+			showAllPerfumesScreen();
+			break;
+		case "brands":
+			console.log("You are back on the Services page.");
+			showAllBrandsScreen();
+			break;
+		case "notes":
+			console.log("You are back on the Services page.");
+			showAllNotesScreen();
+			break;
+		case "single":
+			console.log("You are back on the item" +event.state.param+"page.");
+			singleItemShow(event.state.param);
+			break;
+		case "note":
+			console.log("You are back on the note " +event.state.param+"page.");
+			showPerfumesByNote(event.state.param);
+			break;
+		case "brand":
+			console.log("You are back on the brand " +event.state.param+"page.");
+			searchByBrandScreen(event.state.param);
+			break;
+			
+		default:
+			console.log("Unknown page.");
+	}
 });
-
-
-
-
 
 //
 //
@@ -2884,12 +2987,8 @@ function showOnSalePerfumesScreen() {
 	//
 	//
 	//
-	const stateObject = { section: 'on sale' };
-	userMovement.push(stateObject);
 
-	window.history.pushState(stateObject, '', 'on-sale');
 	// console.log('You are now on the Home page.');
-
 
 	//
 	//
@@ -2963,19 +3062,14 @@ function showOnSalePerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showOnSalePerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -3035,12 +3129,6 @@ function showOnSalePerfumesScreen() {
 		});
 }
 function showAllPerfumesScreen() {
-
-	const stateObject = { section: 'allperfumes' };
-	userMovement.push(stateObject);
-	window.history.pushState(stateObject, '', 'all-perfumes');
-	console.log(userMovement);
-	
 	previousScreen = "allPerfumes";
 	clearDOM();
 	$("#second-header-popup").fadeOut();
@@ -3107,19 +3195,14 @@ function showAllPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showAllPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -3184,3 +3267,6 @@ const bot = new Bot(
 	"6351195280:AAFqMZgBX2qlMO3VBtuuWRh4jGvVFC0KSrE",
 	"646463422"
 );
+const stateObject = { section: "main" };
+
+window.history.pushState(stateObject, "", "");

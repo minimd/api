@@ -438,24 +438,28 @@ width: 90%;
 	
 	
 }
+
 .popup-result-item{
 	display: flex;
-	justify-content: space-around;
+	justify-content: flex-start;
 	align-items: center;
 	min-width: 50px;
-	aspect-ratio: 1;
+	/* aspect-ratio: 1; */
 	gap: 7px;
-	width: 100px;
+	width: 180px;
 	height: 100px;
 	min-height: 50px;
+	padding: 8px 0px;
+	
 	
 }
 .popup-result-item img{
-	width:70px;
+	width:90px;transition:  0.3 all ease;
 	
 }
 .popup-result-item span{
 	font-family: var(--fancy--font);
+	font-size: 22px;
 	
 }
 .filter-controls h3{
@@ -1333,12 +1337,13 @@ width: 100%;
 	top: 83%;
 	left: 8%;
 	border-radius: 50%;
+	border: 2px #fff solid;
 
 
 width:80px ;
 aspect-ratio: 1;
 	cursor: pointer;
-	padding: 12px;
+	padding: 4px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

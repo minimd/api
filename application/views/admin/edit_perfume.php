@@ -80,7 +80,7 @@
             <input type="text" name="box" value="<?php echo set_value('box', $perfume->box); ?>"><br>
 
             <label for="image">Image:</label>
-            <input type="file" name="image"><br>
+            <input type="file" name="image" required><br>
             <img src="<?php echo base_url($perfume->image_url); ?>" alt="Perfume Image" width="100"><br>
 
             <button type="submit">Update Perfume</button>

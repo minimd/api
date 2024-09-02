@@ -9,10 +9,7 @@ $(".second-nav").hide();
 $("#search-input").on("click", function () {
 	$("#search-input").toggleClass("toggle-border");
 });
-$("h1").click(function (e) {
-	e.preventDefault();
-	window.location.reload();
-});
+
 
 $("#search-btn").click(function (e) {
 	// e.preventDefault();
@@ -21,6 +18,10 @@ $("#search-btn").click(function (e) {
 	$(".second-nav").fadeIn();
 	$("#search-bar").val("");
 	$("#search-bar").focus();
+});
+$(".for-arabic").click(function (e) {
+	// e.preventDefault();
+	window.location.href = "ar";
 });
 $("#search-cancel").click(function (e) {
 	e.preventDefault();
@@ -41,28 +42,32 @@ $("#search-bar").on("input", function () {
 //black header
 $("#home-nav").click(function (e) {
 	e.preventDefault();
-	window.location.reload();
-});
-$(".for-english").click(function (e) {
-	e.preventDefault();
-	window.location.href = "http://localhost/api";
-	console.log("ee");
+	const stateObject = { section: "main" };
+	window.history.pushState(stateObject, "", "main");
+	loadHome();
+	// window.location.reload();
 });
 $("h1").click(function (e) {
 	e.preventDefault();
-	window.location.reload();
+	const stateObject = { section: "main" };
+	window.history.pushState(stateObject, "", "main");
+	loadHome();
+	// window.location.reload();
 });
 $("p#cart").click(function (e) {
+	const stateObject = { section: "cart" };
+	window.history.pushState(stateObject, "", "cart");
 	showCartScreen();
 });
 $("#cart-div img").click(function (e) {
+	const stateObject = { section: "cart" };
+	window.history.pushState(stateObject, "", "cart");
 	showCartScreen();
 });
 
 //carousel
 
 let currentSlide = 0;
-showSlide(currentSlide);
 
 function showSlide(index) {
 	const slides = document.querySelectorAll(".carousel-item");
@@ -77,8 +82,6 @@ function changeSlide(n) {
 }
 
 //slider
-
-const track = document.querySelector(".brand-slider-track");
 
 //fuck the slider
 
@@ -108,30 +111,48 @@ $(".header-nav").hover(
 );
 //mens
 $(".men-key").click(function (e) {
+	const stateObject = { section: "men" };
+	window.history.pushState(stateObject, "", "men-perfumes");
 	showMenPerfumesScreen();
 });
 $(".women-key").click(function (e) {
+	const stateObject = { section: "women" };
+	window.history.pushState(stateObject, "", "women-perfumes");
 	showWomenPerfumesScreen();
 });
 $(".unisex-key").click(function (e) {
+	const stateObject = { section: "unisex" };
+	window.history.pushState(stateObject, "", "unisex-perfumes");
 	showUnisexPerfumesScreen();
 });
 $(".testers-key").click(function (e) {
+	const stateObject = { section: "testers" };
+	window.history.pushState(stateObject, "", "testers");
 	showTestersPerfumesScreen();
 });
 $(".unboxed-key").click(function (e) {
+	const stateObject = { section: "unboxed" };
+	window.history.pushState(stateObject, "", "unboxed");
 	showUnboxedPerfumesScreen();
 });
 $(".rares-key").click(function (e) {
+	const stateObject = { section: "rares" };
+	window.history.pushState(stateObject, "", "rare-perfumes");
 	showRarePerfumesScreen();
 });
 $("#new-arrivals-nav").click(function (e) {
+	const stateObject = { section: "new arrival" };
+	window.history.pushState(stateObject, "", "new-arrival");
 	showNewArrivalsScreen();
 });
 $("#best-sellers-nav").click(function (e) {
+	const stateObject = { section: "best-sellers" };
+	window.history.pushState(stateObject, "", "on-sale");
 	showOnSalePerfumesScreen();
 });
 $("#all-perfumes-nav").click(function (e) {
+	const stateObject = { section: "all-perfumes" };
+	window.history.pushState(stateObject, "", "all-perfumes");
 	showAllPerfumesScreen();
 });
 
@@ -144,333 +165,682 @@ let searchBarResults;
 
 //fetching the brands
 //fetching the brands
-fetch("http://localhost/api/get_all_brands", { mode: "no-cors" }).then(
-	(response) =>
-		response.json().then((data) => {
-			brandsList = data;
-
-			document.querySelector(
-				".popup-results"
-			).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
-
-			// re-happens if the button is clicked
-			document
-				.querySelector(".brands-key")
-				.addEventListener("click", function (e) {
-					document.querySelector(
-						".popup-results"
-					).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
-
-					brandsToShow.forEach((brand) => {
-						document.querySelector(".popup-results").innerHTML += `
-				<div class="popup-result-item" value='${brand.id}'>
-					<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
-				</div>`;
-					});
-
-					for (let i = 0; i < brandsToShow.length; i++) {
-						document
-							.querySelectorAll(".popup-result-item")
-							[i].addEventListener("click", function (e) {
-								searchByBrandScreen(e.target.getAttribute("value"));
-							});
-					}
-					$("#show-all-brands").click(function (e) {
-						showAllBrandsScreen();
-					});
-				});
-
-			// Limit the number of brands to 8
-			const brandsToShow = brandsList.slice(0, 8);
-
-			brandsToShow.forEach((brand) => {
-				document.querySelector(".popup-results").innerHTML += `
-            <div class="popup-result-item" value='${brand.id}'>
-                <img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
-            </div>`;
-			});
-			for (let i = 0; i < brandsToShow.length; i++) {
-				document
-					.querySelectorAll(".popup-result-item")
-					[i].addEventListener("click", function (e) {
-						searchByBrandScreen(e.target.getAttribute("value"));
-					});
-			}
-			$("#show-all-brands").click(function (e) {
-				e.preventDefault();
-				showAllBrandsScreen();
-			});
-		})
-);
-fetch("http://localhost/api/get_all_notes", { mode: "no-cors" }).then(
-	(response) =>
-		response.json().then((data) => {
-			// console.log(data);
-
-			notesList = data;
-
-			// re-happens if the button is clicked
-			document
-				.querySelector(".notes-key")
-				.addEventListener("click", function (e) {
-					document.querySelector(
-						".popup-results"
-					).innerHTML = `<button class= 'show-all-nav' id='show-all-notes'>Show all notes</button>`;
-					notesToShow.forEach((note) => {
-						document.querySelector(".popup-results").innerHTML += `
-    <div class="popup-result-item" value='${note.id}'>
-        <img src="${note.note_image}" alt="${note.name}" value='${note.name}'>
-        <span>${note.name}</span>
-    </div>`;
-					});
-					for (let i = 0; i < notesToShow.length; i++) {
-						document
-							.querySelectorAll(".popup-result-item")
-							[i].addEventListener("click", function (e) {
-								showPerfumesByNote(e.target.getAttribute("value"));
-							});
-					}
-
-					$("#show-all-notes").click(function (e) {
-						e.preventDefault();
-						showAllNotesScreen();
-					});
-				});
-
-			// Limit the number of brands to 8
-			const notesToShow = notesList.slice(0, 15);
-			const mainScreenNotes = notesToShow.slice(0, 4);
-			mainScreenNotes.forEach((note, i) => {
-				console.log(mainScreenNotes);
-
-				document.querySelectorAll(".main-note")[
-					i
-				].innerHTML = `<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
-                
-                <div class="inner-card-text">
-                    <h3 value='${note.name}'>${note.name}</h3>
-                    
-                </div>
-
-                <button value='${note.name}'>عرض العطور</button>`;
-			});
-			for (let i = 0; i < mainScreenNotes.length; i++) {
-				document
-					.querySelectorAll(".main-note button")
-					[i].addEventListener("click", function (e) {
-						showPerfumesByNote(e.target.getAttribute("value"));
-						console.log(e.target.getAttribute("value"));
-					});
-			}
-		})
-);
 
 //ultimate fetch
 let allPerfumes;
 
 function loadHome() {
-	fetch(`http://localhost/api/search/all`, { mode: "no-cors" }).then(
-		(response) => {
-			response.json().then((data) => {
-				allPerfumes = data;
-				console.log(data);
+	fetch(`http://localhost/api/search/all`, {}).then((response) =>
+		response.json().then((data) => {
+			fetch("http://localhost/api/get_all_brands", {}).then((response) =>
+				response.json().then((data) => {
+					brandsList = data;
 
-				//filling lists with data from API
-				newArrivalsList = data.filter(
-					(item) => item.status == 4 || item.status == 2
-				);
-				featuredProductsList = data.filter(
-					(item) => item.status == 4 || item.status == 3
-				);
-				// console.log(featuredProductsList);
-
-				//clearing the containers
-				document.querySelector(
-					"#first-scrollable .card-container"
-				).innerHTML = ``;
-
-				//new arrivals
-				newArrivalsList.slice(0, 4).forEach((item) => {
 					document.querySelector(
-						" #first-scrollable .card-container"
-					).innerHTML += `<div class="card" value='${item.perfume_id}'>
+						".popup-results"
+					).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
 
-            <img src="${item.perfume_image}" value='${item.perfume_id}'>
-            <div class="inner-card-text" value='${item.perfume_id}'>
-                <h3 value='${item.perfume_id}'>${
-						item.perfume_name.replace("-", " ").length < 20
-							? item.perfume_name.replace("-", " ")
-							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-					}</h3>
-                <div class="prices" value='${item.perfume_id}'>
-                    <p class="price">${item.price}$</p>
-                </div>
-            </div>
-            <button value='${item.perfume_id}'>عرض المزيد</button>
-        </div>`;
-				});
-				//clearing second card container
-				document.querySelector(
-					"#second-scrollable .card-container"
-				).innerHTML = ``;
-				//featured products
-				featuredProductsList.slice(0, 4).forEach((item) => {
-					document.querySelector(
-						" #second-scrollable .card-container"
-					).innerHTML += `<div class="card" value='${item.perfume_id}'>
-            <img src="${item.perfume_image}" alt="Product 1" value='${
-						item.perfume_id
-					}'>
-            <div class="discount-percentage" value='${
-							item.perfume_id
-						}'>${Math.floor(
-						((item.price - item.new_price) / item.price) * 100
-					)}% </div>
-            <div class="inner-card-text" value='${item.perfume_id}'>
-                <h3 value='${item.perfume_id}'>${
-						item.perfume_name.replace("-", " ").length < 20
-							? item.perfume_name.replace("-", " ")
-							: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
-					}</h3>
-                <div class="prices" value='${item.perfume_id}'>
-                    <p class="price" value='${item.perfume_id}'>${
-						item.price
-					}$</p>
-                    <p class="discounted" value='${item.perfume_id}'>${
-						item.new_price == null ? console.log("null") : item.new_price
-					}$</p>
-                </div>
-            </div>
-
-            <button value='${item.perfume_id}'>عرض المزيد</button>
-        </div>`;
-				});
-
-				// adding event listeners to cards
-
-				for (
-					let i = 0;
-					i <
-					newArrivalsList.slice(0, 4).length +
-						featuredProductsList.slice(0, 4).length;
-					i++
-				) {
+					// re-happens if the button is clicked
 					document
-						.querySelectorAll(".card")
-						[i].addEventListener("click", (e) => {
-							singleItemShow(e.target.getAttribute("value"));
-							console.log(e.target.getAttribute("value"));
+						.querySelector(".brands-key")
+						.addEventListener("click", function (e) {
+							document.querySelector(
+								".popup-results"
+							).innerHTML = `<button class= 'show-all-nav' id='show-all-brands'>Show all brands</button>`;
+
+							brandsToShow.forEach((brand) => {
+								document.querySelector(".popup-results").innerHTML += `
+							<div class="popup-result-item" value='${brand.id}'>
+								<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
+							</div>`;
+							});
+
+							for (let i = 0; i < brandsToShow.length; i++) {
+								document
+									.querySelectorAll(".popup-result-item")
+									[i].addEventListener("click", function (e) {
+										const stateObject = {
+											section: "brand",
+											param: e.target.getAttribute("value"),
+										};
+										
+										
+										console.log(stateObject);
+										window.history.pushState(stateObject, "", "brand");
+										searchByBrandScreen(e.target.getAttribute("value"));
+									});
+							}
+							$("#show-all-brands").click(function (e) {
+								const stateObject = { section: "brands" };
+								window.history.pushState(stateObject, "", "all-brands");
+								showAllBrandsScreen();
+							});
 						});
-				}
 
-				// Debounce function
-				function debounce(func, delay) {
-					let timeoutId;
-					return function (...args) {
-						clearTimeout(timeoutId);
-						timeoutId = setTimeout(() => func.apply(this, args), delay);
+					// Limit the number of brands to 8
+					const brandsToShow = brandsList.slice(0, 8);
+
+					brandsToShow.forEach((brand) => {
+						document.querySelector(".popup-results").innerHTML += `
+						<div class="popup-result-item" value='${brand.id}'>
+							<img src="${brand.logo_url}" alt="${brand.name}" value='${brand.id}'>
+						</div>`;
+					});
+					for (let i = 0; i < brandsToShow.length; i++) {
+						document
+							.querySelectorAll(".popup-result-item")
+							[i].addEventListener("click", function (e) {
+								const stateObject = {
+									section: "brand",
+									param: e.target.getAttribute("value"),
+								};
+								
+								
+								console.log(stateObject);
+								window.history.pushState(stateObject, "", "brand");
+								searchByBrandScreen(e.target.getAttribute("value"));
+							});
+					}
+					$("#show-all-brands").click(function (e) {
+						const stateObject = { section: "brands" };
+						window.history.pushState(stateObject, "", "all-brands");
+						e.preventDefault();
+						showAllBrandsScreen();
+					});
+				})
+			);
+			fetch("http://localhost/api/get_all_notes", {}).then((response) =>
+				response.json().then((data) => {
+					// console.log(data);
+
+					notesList = data;
+
+					// re-happens if the button is clicked
+					document
+						.querySelector(".notes-key")
+						.addEventListener("click", function (e) {
+							document.querySelector(
+								".popup-results"
+							).innerHTML = `<button class= 'show-all-nav' id='show-all-notes'>Show all notes</button>`;
+							notesToShow.forEach((note) => {
+								document.querySelector(".popup-results").innerHTML += `
+				<div class="popup-result-item" value='${note.id}'>
+					<img src="${note.note_image}" alt="${note.name}" value='${note.name}'>
+					<span value='${note.name}'>${note.name}</span>
+				</div>`;
+							});
+							for (let i = 0; i < notesToShow.length; i++) {
+								document
+									.querySelectorAll(".popup-result-item")
+									[i].addEventListener("click", function (e) {
+										const stateObject = {
+											section: "note",
+											param: e.target.getAttribute("value"),
+										};
+										
+										
+										console.log(stateObject);
+										window.history.pushState(stateObject, "", "note");
+										showPerfumesByNote(e.target.getAttribute("value"));
+									});
+							}
+
+							$("#show-all-notes").click(function (e) {
+								const stateObject = { section: "notes" };
+								window.history.pushState(stateObject, "", "all-notes");
+								e.preventDefault();
+								showAllNotesScreen();
+							});
+						});
+
+					// Limit the number of brands to 8
+					const notesToShow = notesList.slice(0,14);
+					const mainScreenNotes = notesToShow.slice(0, 4);
+					mainScreenNotes.forEach((note, i) => {
+						console.log(mainScreenNotes);
+
+						document.querySelectorAll(".main-note")[
+							i
+						].innerHTML = `<img src="${note.note_image}" alt="Product 1" class="" value='${note.name}'>
+							
+					        <div class="inner-card-text">
+					            <h3 value='${note.name}'>${note.name}</h3>
+								
+					        </div>
+			
+					        <button value='${note.name}'>view perfumes</button>`;
+					});
+					for (let i = 0; i < mainScreenNotes.length; i++) {
+						document
+							.querySelectorAll(".main-note button")
+							[i].addEventListener("click", function (e) {
+								const stateObject = {
+									section: "note",
+									param: e.target.getAttribute("value"),
+								};
+								
+								
+								console.log(stateObject);
+								window.history.pushState(stateObject, "", "note");
+								showPerfumesByNote(e.target.getAttribute("value"));
+								console.log(e.target.getAttribute("value"));
+							});
+					}
+				})
+			);
+			allPerfumes = data;
+			console.log(data);
+			console.log(
+				"suiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+			);
+
+			//
+			//
+			//
+			//
+			$(".all").html(`
+    <div class="carousel">
+        <div class="carousel-item active">
+            <img src="http://localhost/api/assets/images/carousel-1.webp" alt="Image 1">
+            <div class="carousel-caption">
+                <h2>First Slide Title</h2>
+                <p>This is a description for the first slide.</p>
+                <!-- <a href="#" class="carousel-btn">Learn More</a> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="http://localhost/api/assets/images/carousel2-.jpg" alt="Image 2">
+            <div class="carousel-caption">
+                <h2>Second Slide Title</h2>
+                <p>This is a description for the second slide.</p>
+                <!-- <a href="#" class="carousel-btn">Discover More</a> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="http://localhost/api/assets/images/carousel-3.webp" alt="Image 3">
+            <div class="carousel-caption">
+                <h2>Third Slide Title</h2>
+                <p>This is a description for the third slide.</p>
+                <!-- <a href="#" class="carousel-btn">Explore More</a> -->
+            </div>
+        </div>
+        <a class="prev" onclick="changeSlide(-1)">❮</a>
+        <a class="next" onclick="changeSlide(1)">❯</a>
+    </div>
+
+
+    <!-- carousel ends here -->
+    <!-- slider starts here -->
+    <div class="brand-slider">
+        <div class="brand-slider-track">
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+
+
+
+        </div>
+    </div>
+
+    <!-- slider ends here -->
+
+
+    <!-- Horizontally Scrollable Cards Section -->
+    <div class="section-title">
+        <h3 class="slider-title">new arrivals</h3>
+    </div>
+
+    <section class="scrollable-cards" id="first-scrollable">
+
+        <div class="card-container">
+            <div class="card">
+
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <!-- Horizontally Scrollable Cards Section -->
+    <div class="section-title">
+        <h3 class="slider-title">on sale</h3>
+    </div>
+
+    <section class="scrollable-cards" id="second-scrollable">
+
+        <div class="card-container">
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                <div class="discount-percentage">25% </div>
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                        <p class="price">40$</p>
+                        <p class="discounted">30$</p>
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <div class="section-title">
+        <h3 class="slider-title">amazing notes</h3>
+    </div>
+    <section class="scrollable-cards" id="third-scrollable">
+
+        <div class="card-container">
+            <div class="card main-note">
+                
+            </div>
+            <div class="card main-note">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                      
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card main-note">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+               
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                    
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+            <div class="card main-note">
+                <img src="http://localhost/api/assets/perfumes/test-perfume.webp" alt="Product 1">
+                
+                <div class="inner-card-text">
+                    <h3>Product 1</h3>
+                    <div class="prices">
+                      
+                    </div>
+                </div>
+
+                <button>View Details</button>
+            </div>
+
+            <!-- Add more cards as needed -->
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/artist.jpeg" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Quentin Bisch
+            </h2>
+            <h3>
+            Bisch is known for his bold and creative use of accords, and his ability to adapt his style to fit the brand he is working with. He has been called a "star perfumer" and is highly sought after in the industry. In an interview, Bisch discussed his passion for perfumery and the pressure and expectations that come with being a successful perfumer. He described himself as a perfectionist who is always seeking to achieve more and is constantly creating perfumes in his mind.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/original.jpeg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Kurkdjian
+            </h2>
+            <h3>In 2009, Kurkdjian co-founded Maison Francis Kurkdjian with Marc Chaya. The Maison represents a blend of traditional French perfumery and modern innovation, offering a "fragrance wardrobe" that allows individuals to express their personalities through scent. His notable creations for  his eponymous Maison include Baccarat Rouge 540 and Aqua Universalis.
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/amouage.png" alt=""></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            AMOUAGE LYRIC 
+            </h2>
+            <h3>thought that lyric was not for me, I found it suffocating, lacking in breath...until today.
+June 13, 6 pm, 23 degrees Celsius, the fiery rays of the sun penetrate the lake water but the rain from the past night raises a cool evening breeze, the perfect climate for lyric. A warm, velvety rose under the sun is suddenly refreshed by a splash of citrus. The soil beneath it, moist and fertile, allows green buds to bloom.
+Elegant, sweet but energetic..as a true man should be. I truly understand the reason for identifying it as a male fragrance.
+
+There are no failed creations by Chong, they simply reveal themselves with time.
+            
+            </h3>
+        </div>
+    </section>
+    <section id="" class="artist right">
+        <div class="artist-image"><img src="http://localhost/api/assets/images/flower.jpg" alt="" class="r80"></div>
+
+        <div class="artist-quote">
+            <h2 id="" class="artist">
+            Lincoln Rose
+            </h2>
+            <h3>the king of flowers, lemony fresh with various nuances of powder, wood notes or fruit, feminine, clean, intensely romantic
+            </h3>
+        </div>
+    </section>`);
+			showSlide(currentSlide);
+			//filling lists with data from API
+			newArrivalsList = data.filter(
+				(item) => item.status == 4 || item.status == 2
+			);
+			featuredProductsList = data.filter(
+				(item) => item.status == 4 || item.status == 3
+			);
+			// console.log(featuredProductsList);
+
+			// clearing the containers
+			document.querySelector(
+				"#first-scrollable .card-container"
+			).innerHTML = ``;
+
+			//new arrivals
+			newArrivalsList.slice(0, 4).forEach((item) => {
+				document.querySelector(
+					" #first-scrollable .card-container"
+				).innerHTML += `<div class="card" value='${item.perfume_id}'>
+
+			    <img src="${item.perfume_image}" value='${item.perfume_id}'>
+			    <div class="inner-card-text" value='${item.perfume_id}'>
+			        <h3 value='${item.perfume_id}'>${
+					item.perfume_name.replace("-", " ").length < 20
+						? item.perfume_name.replace("-", " ")
+						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+				}</h3>
+			        <div class="prices" value='${item.perfume_id}'>
+			            <p class="price">${item.price}$</p>
+			        </div>
+			    </div>
+			    <button value='${item.perfume_id}'>View Details</button>
+			</div>`;
+			});
+			//clearing second card container
+			document.querySelector(
+				"#second-scrollable .card-container"
+			).innerHTML = ``;
+			//featured products
+			featuredProductsList.slice(0, 4).forEach((item) => {
+				document.querySelector(
+					" #second-scrollable .card-container"
+				).innerHTML += `<div class="card" value='${item.perfume_id}'>
+			    <img src="${item.perfume_image}" alt="Product 1" value='${item.perfume_id}'>
+			    <div class="discount-percentage" value='${item.perfume_id}'>${Math.floor(
+					((item.price - item.new_price) / item.price) * 100
+				)}% </div>
+			    <div class="inner-card-text" value='${item.perfume_id}'>
+			        <h3 value='${item.perfume_id}'>${
+					item.perfume_name.replace("-", " ").length < 20
+						? item.perfume_name.replace("-", " ")
+						: item.perfume_name.replace("-", " ").substring(0, 18) + `...`
+				}</h3>
+			        <div class="prices" value='${item.perfume_id}'>
+			            <p class="price" value='${item.perfume_id}'>${item.price}$</p>
+			            <p class="discounted" value='${item.perfume_id}'>${
+					item.new_price == null ? console.log("null") : item.new_price
+				}$</p>
+			        </div>
+			    </div>
+
+			    <button value='${item.perfume_id}'>View Details</button>
+			</div>`;
+			});
+
+			// adding event listeners to cards
+
+			for (
+				let i = 0;
+				i <
+				newArrivalsList.slice(0, 4).length +
+					featuredProductsList.slice(0, 4).length;
+				i++
+			) {
+				document.querySelectorAll(".card")[i].addEventListener("click", (e) => {
+					singleItemShow(e.target.getAttribute("value"));
+					const stateObject = {
+						section: "single",
+						param: e.target.getAttribute("value"),
 					};
+
+					window.history.pushState(stateObject, "", "item");
+					console.log(stateObject);
+				});
+			}
+
+			// Debounce function
+			function debounce(func, delay) {
+				let timeoutId;
+				return function (...args) {
+					clearTimeout(timeoutId);
+					timeoutId = setTimeout(() => func.apply(this, args), delay);
+				};
+			}
+			// Search function
+			function searchByName() {
+				document.querySelector(".search-popup-container").innerHTML = "";
+
+				let searchInput = document.getElementById("search-bar").value;
+				if (searchInput === "") {
+					return;
 				}
-				// Search function
-				function searchByName() {
-					document.querySelector(".search-popup-container").innerHTML += ``;
 
-					let searchInput = document.getElementById("search-bar").value;
-					if (searchInput === "") {
-						return;
-					}
+				console.log(searchInput);
 
-					console.log(searchInput);
+				// Replace spaces with hyphens in the search input for English names
+				let formattedInput = searchInput.toLowerCase().replace(/\s+/g, "-");
 
-					// Replace spaces with hyphens in the search input for English names
-					let formattedInput = searchInput.toLowerCase().replace(/\s+/g, "-");
+				searchBarResults = data.filter((item) => {
+					const englishName = item.perfume_name
+						? item.perfume_name.toLowerCase()
+						: "";
+					const arabicName = item.perfume_arabic_name || "";
 
-					searchBarResults = data.filter((item) => {
-						const englishName = item.perfume_name
-							? item.perfume_name.toLowerCase()
-							: "";
-						const arabicName = item.perfume_arabic_name || "";
+					return (
+						englishName.includes(formattedInput) ||
+						arabicName.includes(searchInput)
+					);
+				}); // This limits the results to a maximum of 6 items
+				let miniSearchItems = searchBarResults.slice(0, 9);
+				if (miniSearchItems.length > 0) {
+					console.log(miniSearchItems);
+				} else {
+					console.log("No results found.");
+				}
 
-						return (
-							englishName.includes(formattedInput) ||
-							arabicName.includes(searchInput)
-						);
-					}); // This limits the results to a maximum of 6 items
-					let miniSearchItems = searchBarResults.slice(0, 9);
-					if (miniSearchItems.length > 0) {
-						console.log(miniSearchItems);
-					} else {
-						console.log("No results found.");
-					}
+				// Here you can add code to display the search results
 
-					// Here you can add code to display the search results
-
-					miniSearchItems.forEach((item) => {
-						document.querySelector(".search-popup-container").innerHTML += `
+				miniSearchItems.forEach((item) => {
+					document.querySelector(".search-popup-container").innerHTML += `
 		<div class="search-item" value='${item.perfume_id}'>
           <img src="${item.perfume_image}" alt="" value='${item.perfume_id}'>
           <div class="search-item-text" value='${item.perfume_id}'>
             <p class="english" value='${item.perfume_id}'>${
-							item.perfume_name.replace("-", " ").length < 11
-								? item.perfume_name.replace("-", " ")
-								: item.perfume_name.replace("-", " ").substring(0, 9) + `...`
-						} </p>
+						item.perfume_name.replace("-", " ").length < 11
+							? item.perfume_name.replace("-", " ")
+							: item.perfume_name.replace("-", " ").substring(0, 9) + `...`
+					} </p>
             <p class="arabic" value='${item.perfume_id}'>${
-							item.perfume_name.replace("-", " ").length < 11
-								? item.perfume_arabic_name.replace("-", " ")
-								: item.perfume_arabic_name
-								? item.perfume_arabic_name.replace("-", " ").substring(0, 9) +
-								  `...`
-								: ``
-						}</p>
+						item.perfume_name.replace("-", " ").length < 11
+							? item.perfume_arabic_name.replace("-", " ")
+							: item.perfume_arabic_name
+							? item.perfume_arabic_name.replace("-", " ").substring(0, 9) +
+							  `...`
+							: ``
+					}</p>
           </div>
         </div>
 		`;
-					});
-					document.querySelector(
-						".search-popup-container"
-					).innerHTML += `<div class='margined'><button class= 'show-all-nav' id='show-all-search'>إظهار النتائج</button><div>`;
+				});
+				document.querySelector(
+					".search-popup-container"
+				).innerHTML += `<div class='margined'><button class= 'show-all-nav' id='show-all-search'>Show all searches</button><div>`;
 
-					$("#show-all-search").click(function (e) {
+				$("#show-all-search").click(function (e) {
+					e.preventDefault();
+					console.log("sy");
+
+					searchNameScreen(
+						document
+							.getElementById("search-bar")
+							.value.toLowerCase()
+							.replace(/\s+/g, "-")
+					);
+				});
+				// Add event listener to the search items
+				document.querySelectorAll(".search-item").forEach((item) => {
+					item.addEventListener("click", (e) => {
+						const stateObject = {
+							section: "single",
+							param: e.target.getAttribute("value"),
+						};
+						
+						
+						console.log(stateObject);
+						window.history.pushState(stateObject, "", "item");
 						e.preventDefault();
-						console.log("sy");
+						singleItemShow(e.target.getAttribute("value"));
 
-						searchNameScreen(
-							document
-								.getElementById("search-bar")
-								.value.toLowerCase()
-								.replace(/\s+/g, "-")
-						);
+						e.preventDefault();
+						$(".second-nav").hide();
+						$(".first-nav").fadeIn();
+						$(".search-popup").fadeOut();
+
+						console.log(e.target.getAttribute("value"));
 					});
-					// Add event listener to the search items
-					document.querySelectorAll(".search-item").forEach((item) => {
-						item.addEventListener("click", (e) => {
-							e.preventDefault();
-							singleItemShow(e.target.getAttribute("value"));
+				});
+			}
 
-							e.preventDefault();
-							$(".second-nav").hide();
-							$(".first-nav").fadeIn();
-							$(".search-popup").fadeOut();
+			// Create a debounced version of the search function
+			const debouncedSearch = debounce(searchByName, 400);
 
-							console.log(e.target.getAttribute("value"));
-						});
-					});
-				}
+			// Add event listener to the search input
+			$("#search-bar").on("input", debouncedSearch);
 
-				// Create a debounced version of the search function
-				const debouncedSearch = debounce(searchByName, 400);
-
-				// Add event listener to the search input
-				$("#search-bar").on("input", debouncedSearch);
-
-				//here you code end
-			});
-		}
+			//here you code end
+		})
 	);
 }
 loadHome();
-
 function findSimilarPerfumes(selectedPerfume, allPerfumes) {
 	const selectedNotes = (selectedPerfume.all_note_names || "")
 		.toLowerCase()
@@ -501,7 +871,7 @@ function singleItemShow(perfumeId) {
 		const similarPerfumes = findSimilarPerfumes(selectedPerfume, allPerfumes);
 		let similarPerfumesHtml = `
             <div class="similar-perfumes-section">
-                <h4>قد يعجبك ايضا</h4>
+                <h4>Similar Perfumes</h4>
                 <div class="similar-perfumes-container">
         `;
 
@@ -519,7 +889,7 @@ function singleItemShow(perfumeId) {
 												? `<p class="sale-price">$${perfume.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">view more</button>
                 </div>
             `;
 		});
@@ -532,7 +902,7 @@ function singleItemShow(perfumeId) {
 
 		sizeButtons += `<button class="size-btn active" data-size="1" data-price="${
 			selectedPerfume.new_price || selectedPerfume.price
-		}">${selectedPerfume.size || "Default"} </button>`;
+		}"> ${selectedPerfume.size || "Default"} </button>`;
 
 		if (selectedPerfume.size_2nd) {
 			sizeButtons += `<button class="size-btn" data-size="2" data-price="${
@@ -573,31 +943,31 @@ function singleItemShow(perfumeId) {
 												}
 						</div>
                         <div class="quantity-container">
-                            <label for="quantity">الكمية:</label>
+                            <label for="quantity">Quantity:</label>
                             <input type="number" id="quantity" name="quantity" min="1" value="1">
                         </div>
                         <div class="buy-buttons">
-                            <button class="add-to-cart">اضافة الى السلة</button>
-                            <button class="buy-now">شراء الان</button>
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">buy now</button>
                         </div>
 						<div class="notes-section">
-                    <h4>نوتات العطر</h4>
+                    <h4>Fragrance Notes</h4>
 					<div class='line'></div>
                     <div class="notes-container">
                         <div class="note-category">
-                            <h5>بداية العطر</h5>
+                            <h5>Top Notes</h5>
                             <p>${selectedPerfume.top_note_names || "N/A"}</p>
                         </div>
                         <div class="note-category">
-                            <h5>وسط العطر</h5>
+                            <h5>Middle Notes</h5>
                             <p>${selectedPerfume.middle_note_names || "N/A"}</p>
                         </div>
                         <div class="note-category">
-                            <h5>استقرارية العطر</h5>
+                            <h5>Base Notes</h5>
                             <p>${selectedPerfume.base_note_names || "N/A"}</p>
                         </div>
                         <div class="note-category">
-                            <h5>يوحي بإنه:</h5>
+                            <h5>feels like :</h5>
                             <p>${selectedPerfume.tag || "N/A"}</p>
                         </div>
                     </div>
@@ -607,19 +977,19 @@ function singleItemShow(perfumeId) {
                 <div class='line description-line'></div>
                 <div class="description">
                     <h4>Description</h4>
-                    <p>${selectedPerfume.description} هذا العطر ${
+                    <p>${selectedPerfume.description} this item is ${
 			selectedPerfume.box == "0"
-				? "جديد."
+				? "new."
 				: selectedPerfume.box == "1"
-				? "تيستر"
+				? "a tester"
 				: selectedPerfume.box == "2"
-				? "دون غلاف"
+				? "unboxed"
 				: selectedPerfume.box == "3"
-				? "نادر"
+				? "rare"
 				: null
 		}</p>
                 </div>
-								<div class='line similar-perfumes-line'></div>
+				<div class='line similar-perfumes-line'></div>
                 ${similarPerfumesHtml}
             </div>
         `;
@@ -698,16 +1068,6 @@ function singleItemShow(perfumeId) {
 			$(".similar-perfumes-section").fadeIn(2000);
 		}, 3800);
 
-		//event listener for the "similar perfumes" button
-		document
-			.querySelectorAll(".similar-perfumes-container .view-details")
-			.forEach((button) => {
-				button.addEventListener("click", function () {
-					const perfumeId = this.closest(".perfume-card").dataset.id;
-					singleItemShow(perfumeId);
-				});
-			});
-
 		document.querySelectorAll(".size-btn").forEach((button) => {
 			button.addEventListener("click", function () {
 				// Remove active class from all buttons
@@ -742,6 +1102,23 @@ function singleItemShow(perfumeId) {
 				}
 			});
 		});
+		//event listener for the "similar perfumes" button
+		document
+			.querySelectorAll(".similar-perfumes-container .view-details")
+			.forEach((button) => {
+				button.addEventListener("click", function () {
+					const perfumeId = this.closest(".perfume-card").dataset.id;
+					const stateObject = {
+						section: "single",
+						param: perfumeId,
+					};
+					console.log(stateObject);
+					
+
+					window.history.pushState(stateObject, "", "item");
+					singleItemShow(perfumeId);
+				});
+			});
 
 		// Add event listener for the "Add to Cart" button
 		document
@@ -790,6 +1167,14 @@ function singleItemShow(perfumeId) {
 
 			// Show cart popup for feedback to the user
 			showCartPopup(formattedPerfumeName, selectedSize + " $", quantity, price);
+			const stateObject = {
+				section: "cart",
+				
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "cart");
 			showCartScreen();
 		});
 	}
@@ -828,7 +1213,7 @@ function addToCart(perfumeId, perfumeName, size, quantity, price, img) {
 function showCartPopup(perfumeName, size, quantity, price) {
 	const popup = document.createElement("div");
 	popup.className = "cart-popup";
-	popup.textContent = `اضيف للسلة: ${quantity} x ${perfumeName} (${size}) `;
+	popup.textContent = `Added to cart: ${quantity} x ${perfumeName} (${size}) perfume price is ${price}$`;
 	document.body.appendChild(popup);
 
 	// Show the popup
@@ -856,20 +1241,20 @@ function searchNameScreen(term) {
 	const controlsHtml = `
 		<div class="search-controls">
 			<div class="sort-controls">
-				<label for="sort-select">الترتيب حسب :</label>
+				<label for="sort-select">Sort by:</label>
 				<select id="sort-select">
-					<option value="name-asc">الاسم (A-Z)</option>
-					<option value="name-desc">الاسم (Z-A)</option>
-					<option value="price-asc">السعر (منخفض الى مرتفع)</option>
-					<option value="price-desc">السعر (مرتفع الى منخفض)</option>
+					<option value="name-asc">Name (A-Z)</option>
+					<option value="name-desc">Name (Z-A)</option>
+					<option value="price-asc">Price (Low to High)</option>
+					<option value="price-desc">Price (High to Low)</option>
 				</select>
 			</div>
 			<div class="filter-controls">
-				<label for="min-price">السعر الادنى:</label>
+				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" min="0">
-				<label for="max-price">السعر الاعى:</label>
+				<label for="max-price">Max Price:</label>
 				<input type="number" id="max-price" min="0">
-				<button id="apply-filter">تطبيق الفلتر</button>
+				<button id="apply-filter">Apply Filter</button>
 			
 			</div>
 		</div>
@@ -890,23 +1275,26 @@ function searchNameScreen(term) {
 					<h3>${item.perfume_name.replace(/-/g, " ")}</h3>
 					<p>Brand: ${item.brand_name}</p>
 					<p>Price: $${item.price}</p>
-					${item.new_price ? `<p class="sale-price"> $${item.new_price}</p>` : ""}
-					<button class="view-details">عرض المزيد</button>
+					${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+					<button class="view-details">View Details</button>
 				</div>
 			`;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				document.body.innerHTML += `<button class= 'show-all-nav' id='back'><img src='https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff'/></button>`;
 
-				$("#back").click(function (e) {
-					searchNameScreen(previousScreen);
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				console.log(stateObject);
+				
+
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -986,20 +1374,20 @@ function searchByBrandScreen(brandId) {
 	const controlsHtml = `
 		<div class="search-controls">
 			<div class="sort-controls">
-				<label for="sort-select">الترتيب حسب :</label>
+				<label for="sort-select">Sort by:</label>
 				<select id="sort-select">
-					<option value="name-asc">الاسم (a-z)</option>
-					<option value="name-desc">الاسم (z-a)</option>
-					<option value="price-asc">السعر (منخفض الى مرتفع)</option>
-					<option value="price-desc">السعر (مرتفع الى منخفض)</option>
+					<option value="name-asc">Name (A-Z)</option>
+					<option value="name-desc">Name (Z-A)</option>
+					<option value="price-asc">Price (Low to High)</option>
+					<option value="price-desc">Price (High to Low)</option>
 				</select>
 			</div>
 			<div class="filter-controls">
-				<label for="min-price">السعر الادنى:</label>
+				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" min="0">
-				<label for="max-price">السعر الاعلى:</label>
+				<label for="max-price">Max Price:</label>
 				<input type="number" id="max-price" min="0">
-				<button id="apply-filter">تطبيق الفلتر</button>
+				<button id="apply-filter">Apply Filter</button>
 				
 			</div>
 		</div>
@@ -1023,38 +1411,26 @@ function searchByBrandScreen(brandId) {
 					<h3>${item.perfume_name.replace(/-/g, " ")}</h3>
 					<p>Brand: ${item.brand_name}</p>
 					<p>Price: $${item.price}</p>
-					${item.new_price ? `<p class="sale-price"> $${item.new_price}</p>` : ""}
-					<button class="view-details">عرض المزيد</button>
+					${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+					<button class="view-details">View Details</button>
 				</div>
 			`;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
 				// Create the button element
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				console.log(stateObject);
+				
 
-				// Create the image element
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-
-				// Append the image to the button
-				button.appendChild(img);
-
-				// Append the button to the body
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					searchByBrandScreen(previousScreen);
-
-					$("#back").remove();
-				});
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1147,7 +1523,16 @@ function showAllBrandsScreen() {
 		.querySelectorAll("#all-brands-container .perfume-card")
 		.forEach((card) => {
 			card.addEventListener("click", function (e) {
+				const stateObject = {
+					section: "brand",
+					param: this.dataset.id,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "brand");
 				searchByBrandScreen(this.dataset.id);
+				
 			});
 		});
 }
@@ -1170,20 +1555,20 @@ function showPerfumesByNote(noteName) {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
 				<h3> note :${noteName}</h3>
             </div>
         </div>
@@ -1203,21 +1588,14 @@ function showPerfumesByNote(noteName) {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showPerfumesByNote(noteName);
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1282,11 +1660,18 @@ function createPerfumeCard(perfume) {
 		<h3>${perfume.perfume_name.replace("-", " ")}</h3>
 		<p>${perfume.brand_name}</p>
 		<p>Price: $${perfume.price}</p>
-		${perfume.new_price ? `<p class="sale-price"> $${perfume.new_price}</p>` : ""}
-		<button class="view-details" data-id="${perfume.perfume_id}">عرض المزيد</button>
+		${
+			perfume.new_price
+				? `<p class="sale-price">Sale: $${perfume.new_price}</p>`
+				: ""
+		}
+		<button class="view-details" data-id="${
+			perfume.perfume_id
+		}">View Details</button>
 	`;
 	return card;
 }
+
 function showAllNotesScreen() {
 	$("#second-header-popup").fadeOut();
 	clearDOM();
@@ -1307,7 +1692,17 @@ function showAllNotesScreen() {
             </div>
             <button value="${note.id}">View Perfumes</button>
         `;
-		noteCard.addEventListener("click", () => showPerfumesByNote(note.name));
+		noteCard.addEventListener("click", () =>{
+			const stateObject = {
+				section: "note",
+				param: note.name,
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "note");
+			
+			showPerfumesByNote(note.name)});
 		container.appendChild(noteCard);
 	});
 
@@ -1334,20 +1729,20 @@ function showMenPerfumesScreen() {
 	const controlsHtml = `
 		<div class="search-controls">
 			<div class="sort-controls">
-				<label for="sort-select">الترتيب حسب :</label>
+				<label for="sort-select">Sort by:</label>
 				<select id="sort-select">
-					<option value="name-asc">الاسم (a-z)</option>
+					<option value="name-asc">Name (A-Z)</option>
 					<option value="name-desc">Name (Z-A)</option>
-					<option value="price-asc">السعر (منخفض الى مرتفع)</option>
-					<option value="price-desc">السعر (مرتفع الى منخفض)</option>
+					<option value="price-asc">Price (Low to High)</option>
+					<option value="price-desc">Price (High to Low)</option>
 				</select>
 			</div>
 			<div class="filter-controls">
-				<label for="min-price">السعر الادنى:</label>
+				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" min="0">
-				<label for="max-price">السعر الاعلى:</label>
+				<label for="max-price">Max Price:</label>
 				<input type="number" id="max-price" min="0">
-				<button id="apply-filter">تطبيق الفلتر</button>
+				<button id="apply-filter">Apply Filter</button>
 			</div>
 		</div>
 		<div id="search-results" class="search-results-grid"></div>
@@ -1372,30 +1767,26 @@ function showMenPerfumesScreen() {
 					<h3>${item.perfume_name.replace(/-/g, " ")}</h3>
 					<p>Brand: ${item.brand_name}</p>
 					<p>Price: $${item.price}</p>
-					${item.new_price ? `<p class="sale-price"> $${item.new_price}</p>` : ""}
-					<button class="view-details">عرض المزيد</button>
+					${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+					<button class="view-details">View Details</button>
 				</div>
 			`;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showMenPerfumesScreen();
-					$("#back").remove();
-				});
+				
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1470,20 +1861,20 @@ function showWomenPerfumesScreen() {
 	const controlsHtml = `
 		<div class="search-controls">
 			<div class="sort-controls">
-				<label for="sort-select">الترتيب حسب :</label>
+				<label for="sort-select">Sort by:</label>
 				<select id="sort-select">
-					<option value="name-asc">الاسم (a-z)</option>
+					<option value="name-asc">Name (A-Z)</option>
 					<option value="name-desc">Name (Z-A)</option>
-					<option value="price-asc">السعر (منخفض الى مرتفع)</option>
-					<option value="price-desc">السعر (مرتفع الى منخفض)</option>
+					<option value="price-asc">Price (Low to High)</option>
+					<option value="price-desc">Price (High to Low)</option>
 				</select>
 			</div>
 			<div class="filter-controls">
-				<label for="min-price">السعر الادنى:</label>
+				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" min="0">
-				<label for="max-price">السعر الاعلى:</label>
+				<label for="max-price">Max Price:</label>
 				<input type="number" id="max-price" min="0">
-				<button id="apply-filter">تطبيق الفلتر</button>
+				<button id="apply-filter">Apply Filter</button>
 			</div>
 		</div>
 		<div id="search-results" class="search-results-grid"></div>
@@ -1508,30 +1899,25 @@ function showWomenPerfumesScreen() {
 					<h3>${item.perfume_name.replace(/-/g, " ")}</h3>
 					<p>Brand: ${item.brand_name}</p>
 					<p>Price: $${item.price}</p>
-					${item.new_price ? `<p class="sale-price"> $${item.new_price}</p>` : ""}
-					<button class="view-details">عرض المزيد</button>
+					${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+					<button class="view-details">View Details</button>
 				</div>
 			`;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showWomenPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1606,20 +1992,20 @@ function showUnisexPerfumesScreen() {
 	const controlsHtml = `
 		<div class="search-controls">
 			<div class="sort-controls">
-				<label for="sort-select">الترتيب حسب :</label>
+				<label for="sort-select">Sort by:</label>
 				<select id="sort-select">
-					<option value="name-asc">الاسم (a-z)</option>
+					<option value="name-asc">Name (A-Z)</option>
 					<option value="name-desc">Name (Z-A)</option>
-					<option value="price-asc">السعر (منخفض الى مرتفع)</option>
-					<option value="price-desc">السعر (مرتفع الى منخفض)</option>
+					<option value="price-asc">Price (Low to High)</option>
+					<option value="price-desc">Price (High to Low)</option>
 				</select>
 			</div>
 			<div class="filter-controls">
-				<label for="min-price">السعر الادنى:</label>
+				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" min="0">
-				<label for="max-price">السعر الاعلى:</label>
+				<label for="max-price">Max Price:</label>
 				<input type="number" id="max-price" min="0">
-				<button id="apply-filter">تطبيق الفلتر</button>
+				<button id="apply-filter">Apply Filter</button>
 			</div>
 		</div>
 		<div id="search-results" class="search-results-grid"></div>
@@ -1642,30 +2028,25 @@ function showUnisexPerfumesScreen() {
 					<h3>${item.perfume_name.replace(/-/g, " ")}</h3>
 					<p>Brand: ${item.brand_name}</p>
 					<p>Price: $${item.price}</p>
-					${item.new_price ? `<p class="sale-price"> $${item.new_price}</p>` : ""}
-					<button class="view-details">عرض المزيد</button>
+					${item.new_price ? `<p class="sale-price">Sale: $${item.new_price}</p>` : ""}
+					<button class="view-details">View Details</button>
 				</div>
 			`;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let button = document.createElement("button");
-				button.className = "show-all-nav";
-				button.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				button.appendChild(img);
-				document.body.appendChild(button);
-
-				$("#back").click(function (e) {
-					showUnisexPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1740,20 +2121,20 @@ function showTestersPerfumesScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -1778,32 +2159,27 @@ function showTestersPerfumesScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showTestersPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -1878,20 +2254,20 @@ function showUnboxedPerfumesScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -1916,32 +2292,27 @@ function showUnboxedPerfumesScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showUnboxedPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2016,20 +2387,20 @@ function showRarePerfumesScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -2054,32 +2425,27 @@ function showRarePerfumesScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showRarePerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2154,7 +2520,7 @@ function showCartScreen() {
 	const cart = getCart();
 
 	// Display cart items
-	let cartItemsHtml = "<h2>السلة</h2><div class='cart-items'>";
+	let cartItemsHtml = "<h2>Your Cart</h2><div class='cart-items'>";
 
 	if (cart.length === 0) {
 		cartItemsHtml += "<p>Your cart is empty.</p>";
@@ -2179,37 +2545,37 @@ function showCartScreen() {
                     <p class="item-price">Total Price: $<span id="item-price-${index}">${totalItemPrice}</span></p>
                     <button class="view-item" data-id="${
 											item.perfumeId
-										}">عرض</button>
+										}">View Item</button>
                 </div></div>
             `;
 		});
-		cartItemsHtml += `<button id="clear-cart">إلغاء السلة</button>`;
+		cartItemsHtml += `<button id="clear-cart">Clear Cart</button>`;
 	}
 
 	cartItemsHtml += "</div>";
 
 	// Create input fields for user details
 	const formHtml = `
-        <h2>معلومات التوصيل</h2>
+        <h2>Shipping Information</h2>
         <form id="order-form">
             <div class="form-group">
-                <label for="name">الاسم:</label>
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="city">المحافظة:</label>
+                <label for="city">City:</label>
                 <input type="text" id="city" name="city" required>
             </div>
             <div class="form-group">
-                <label for="street">العنوان:</label>
+                <label for="street">Street:</label>
                 <input type="text" id="street" name="street" required>
             </div>
             <div class="form-group">
-                <label for="phone-number">رقم الهاتف:</label>
+                <label for="phone-number">Phone Number:</label>
                 <input type="tel" id="phone-number" name="phone-number" required pattern="[0-9]{11}">
             </div>
-            <button id='submit-order' type="submit">تثبيت الطلب</button>
-			<span id='refund'>*الاسترجاع في حالة كان العطر مكسور</span>
+            <button type="submit">Submit Order</button>
+			<span id='refund'>*refund policies are on broken perfumes</span>
         </form>
     `;
 
@@ -2219,11 +2585,15 @@ function showCartScreen() {
 	// Event listeners for quantity buttons
 	document.querySelectorAll(".quantity-btn").forEach((button) => {
 		button.addEventListener("click", function (e) {
+			console.log('pressed');
+		
+			
+			// showCartScreen();
 			const index = parseInt(this.getAttribute("data-index"));
 			const action = this.getAttribute("data-action");
 			updateCartQuantity(index, action);
-			updateItemPrice(index); // Update the price for this item
 			showCartScreen(); // Re-render the cart screen to reflect changes
+			updateItemPrice(index); // Update the price for this item
 		});
 	});
 
@@ -2231,6 +2601,14 @@ function showCartScreen() {
 	document.querySelectorAll(".view-item").forEach((button) => {
 		button.addEventListener("click", function (e) {
 			const perfumeId = this.getAttribute("data-id");
+			const stateObject = {
+				section: "single",
+				param: perfumeId,
+			};
+			
+			
+			console.log(stateObject);
+			window.history.pushState(stateObject, "", "item");
 			singleItemShow(perfumeId);
 		});
 	});
@@ -2278,7 +2656,6 @@ function showCartScreen() {
 					delete obj[lastKey];
 					delete obj[firstKey];
 				});
-
 				bot.sendMessage("**********").then((res) => {
 					bot.sendMessage("new order:").then((res) => {
 						bot.sendMessage("name: " + $("#name").val()).then((res) => {
@@ -2314,9 +2691,12 @@ function updateCartQuantity(index, action) {
 	if (action === "increase") {
 		cart[index].quantity++;
 	} else if (action === "decrease") {
-		cart[index].quantity--;
-		if (cart[index].quantity <= 0) {
-			cart.splice(index, 1); // Remove the item if quantity is 0 or less
+		if (cart[index].quantity <= 1) {
+			cart.splice(index, 1);
+			showCartScreen();
+			 // Remove the item if quantity is 0 or less
+		}
+		else{		cart[index].quantity--;
 		}
 	}
 	localStorage.setItem("cart", JSON.stringify(cart));
@@ -2366,6 +2746,11 @@ function getCart() {
 }
 
 function showNewArrivalsScreen() {
+	//
+	//
+	//
+	//
+
 	previousScreen = "newArrivals";
 	clearDOM();
 	$("#second-header-popup").fadeOut();
@@ -2381,20 +2766,20 @@ function showNewArrivalsScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -2421,32 +2806,27 @@ function showNewArrivalsScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showNewArrivalsScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2505,7 +2885,115 @@ function showNewArrivalsScreen() {
 			renderSearchResults(filteredResults);
 		});
 }
+
+//
+//
+
+let userMovement = [];
+
+window.addEventListener("popstate", function (event) {
+	// event.preventDefault;
+	console.log("back pressed");
+
+	console.log(event.state);
+	console.log(event.state.section);
+	// console.log(userMovement[userMovement.length - 2].section);
+
+	switch (event.state.section) {
+		case "main":
+			console.log("you are now on the main page");
+			loadHome();
+			// showOnSalePerfumesScreen();
+
+			break;
+
+		case "cart":
+			console.log("You are back on the cart page.");
+			showCartScreen();
+			break;
+		case "allperfumes":
+			console.log("You are back on the all perfumes page.");
+			showAllPerfumesScreen();
+			break;
+		case "men":
+			console.log("You are back on the men perfumes page.");
+			showMenPerfumesScreen();
+			break;
+		case "women":
+			console.log("You are back on the women perfumes page.");
+			showWomenPerfumesScreen();
+			break;
+		case "unisex":
+			console.log("You are back on the unisex perfumes page.");
+			showUnisexPerfumesScreen();
+			break;
+		case "testers":
+			console.log("You are back on the testers perfumes page.");
+			showTestersPerfumesScreen();
+			break;
+		case "unboxed":
+			console.log("You are back on the unboxed perfumes page.");
+			showUnboxedPerfumesScreen();
+			break;
+		case "rares":
+			console.log("You are back on the rares page.");
+			showRarePerfumesScreen();
+			break;
+		case "new arrival":
+			console.log("You are back on the new arrival page.");
+			showNewArrivalsScreen();
+			break;
+		case "best-sellers":
+			console.log("You are back on the best sellers page.");
+			showOnSalePerfumesScreen();
+			break;
+		case "all-perfumes":
+			console.log("You are back on the all perfumes page.");
+			showAllPerfumesScreen();
+			break;
+		case "brands":
+			console.log("You are back on the Services page.");
+			showAllBrandsScreen();
+			break;
+		case "notes":
+			console.log("You are back on the Services page.");
+			showAllNotesScreen();
+			break;
+		case "single":
+			console.log("You are back on the item" +event.state.param+"page.");
+			singleItemShow(event.state.param);
+			break;
+		case "note":
+			console.log("You are back on the note " +event.state.param+"page.");
+			showPerfumesByNote(event.state.param);
+			break;
+		case "brand":
+			console.log("You are back on the brand " +event.state.param+"page.");
+			searchByBrandScreen(event.state.param);
+			break;
+			
+		default:
+			console.log("Unknown page.");
+	}
+});
+
+//
+//
+//
+//
 function showOnSalePerfumesScreen() {
+	//
+	//
+	//
+	//
+	//
+
+	// console.log('You are now on the Home page.');
+
+	//
+	//
+	//
+	//
 	previousScreen = "onSalePerfumes";
 	clearDOM();
 	$("#second-header-popup").fadeOut();
@@ -2521,20 +3009,20 @@ function showOnSalePerfumesScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -2561,32 +3049,27 @@ function showOnSalePerfumesScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showOnSalePerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2661,20 +3144,20 @@ function showAllPerfumesScreen() {
 	const controlsHtml = `
         <div class="search-controls">
             <div class="sort-controls">
-                <label for="sort-select">الترتيب حسب :</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
-                    <option value="name-asc">الاسم (a-z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
                     <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">السعر (منخفض الى مرتفع)</option>
-                    <option value="price-desc">السعر (مرتفع الى منخفض)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
             <div class="filter-controls">
-                <label for="min-price">السعر الادنى:</label>
+                <label for="min-price">Min Price:</label>
                 <input type="number" id="min-price" min="0">
-                <label for="max-price">السعر الاعلى:</label>
+                <label for="max-price">Max Price:</label>
                 <input type="number" id="max-price" min="0">
-                <button id="apply-filter">تطبيق الفلتر</button>
+                <button id="apply-filter">Apply Filter</button>
             </div>
         </div>
         <div id="search-results" class="search-results-grid"></div>
@@ -2699,32 +3182,27 @@ function showAllPerfumesScreen() {
                     <p>Price: $${item.price}</p>
                     ${
 											item.new_price
-												? `<p class="sale-price"> $${item.new_price}</p>`
+												? `<p class="sale-price">Sale: $${item.new_price}</p>`
 												: ""
 										}
-                    <button class="view-details">عرض المزيد</button>
+                    <button class="view-details">View Details</button>
                 </div>
             `;
 			searchResultsElement.innerHTML += perfumeCard;
 		});
 
-		// Add event listeners to "عرض المزيد" buttons
+		// Add event listeners to "View Details" buttons
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				let backButton = document.createElement("button");
-				backButton.className = "show-all-nav";
-				backButton.id = "back";
-				let img = document.createElement("img");
-				img.src =
-					"https://img.icons8.com/?size=100&id=40217&format=png&color=ffffff";
-				backButton.appendChild(img);
-				document.body.appendChild(backButton);
-
-				$("#back").click(function (e) {
-					showAllPerfumesScreen();
-					$("#back").remove();
-				});
+				const stateObject = {
+					section: "single",
+					param: perfumeId,
+				};
+				
+				
+				console.log(stateObject);
+				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
 		});
@@ -2789,3 +3267,6 @@ const bot = new Bot(
 	"6351195280:AAFqMZgBX2qlMO3VBtuuWRh4jGvVFC0KSrE",
 	"646463422"
 );
+const stateObject = { section: "main" };
+
+window.history.pushState(stateObject, "", "");
