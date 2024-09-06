@@ -10,7 +10,6 @@ $("#search-input").on("click", function () {
 	$("#search-input").toggleClass("toggle-border");
 });
 
-
 $("#search-btn").click(function (e) {
 	// e.preventDefault();
 	$(".first-nav").hide();
@@ -90,7 +89,7 @@ $("#second-header-popup").hide();
 $("#categories-nav").click(function () {
 	if ($("#second-header-popup").css("display") == "none") {
 	} else {
-		console.log("block");
+		
 	}
 	$("#second-header-popup").removeClass("hidden");
 	$("#second-header-popup").fadeIn();
@@ -203,9 +202,8 @@ function loadHome() {
 											section: "brand",
 											param: e.target.getAttribute("value"),
 										};
-										
-										
-										console.log(stateObject);
+
+
 										window.history.pushState(stateObject, "", "brand");
 										searchByBrandScreen(e.target.getAttribute("value"));
 									});
@@ -234,9 +232,8 @@ function loadHome() {
 									section: "brand",
 									param: e.target.getAttribute("value"),
 								};
+
 								
-								
-								console.log(stateObject);
 								window.history.pushState(stateObject, "", "brand");
 								searchByBrandScreen(e.target.getAttribute("value"));
 							});
@@ -277,9 +274,8 @@ function loadHome() {
 											section: "note",
 											param: e.target.getAttribute("value"),
 										};
+
 										
-										
-										console.log(stateObject);
 										window.history.pushState(stateObject, "", "note");
 										showPerfumesByNote(e.target.getAttribute("value"));
 									});
@@ -294,10 +290,9 @@ function loadHome() {
 						});
 
 					// Limit the number of brands to 8
-					const notesToShow = notesList.slice(0,14);
+					const notesToShow = notesList.slice(0, 14);
 					const mainScreenNotes = notesToShow.slice(0, 4);
 					mainScreenNotes.forEach((note, i) => {
-						console.log(mainScreenNotes);
 
 						document.querySelectorAll(".main-note")[
 							i
@@ -318,21 +313,16 @@ function loadHome() {
 									section: "note",
 									param: e.target.getAttribute("value"),
 								};
+
 								
-								
-								console.log(stateObject);
 								window.history.pushState(stateObject, "", "note");
 								showPerfumesByNote(e.target.getAttribute("value"));
-								console.log(e.target.getAttribute("value"));
 							});
 					}
 				})
 			);
 			allPerfumes = data;
-			console.log(data);
-			console.log(
-				"suiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-			);
+			
 
 			//
 			//
@@ -375,44 +365,53 @@ function loadHome() {
         <div class="brand-slider-track">
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/amouage-logo.png" alt="Brand 1"></div>
             <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/chanel-logo.svg" alt="Brand 1"></div>
-            <div class="brand-slide"><img src="http://localhost/api/assets/brands/dior-logo.svg" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/clive-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/frederic-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/initio-logo.png" alt="Brand 1"></div>
+            <div class="brand-slide"><img src="http://localhost/api/assets/brands/Xerjoff-logo.png" alt="Brand 1"></div>
+            
 
 
 
@@ -697,7 +696,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 			        <div class="prices" value='${item.perfume_id}'>
 			            <p class="price" value='${item.perfume_id}'>${item.price}$</p>
 			            <p class="discounted" value='${item.perfume_id}'>${
-					item.new_price == null ? console.log("null") : item.new_price
+					item.new_price == null ? console.log("") : item.new_price
 				}$</p>
 			        </div>
 			    </div>
@@ -723,7 +722,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 					};
 
 					window.history.pushState(stateObject, "", "item");
-					console.log(stateObject);
+					
 				});
 			}
 
@@ -744,7 +743,6 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 					return;
 				}
 
-				console.log(searchInput);
 
 				// Replace spaces with hyphens in the search input for English names
 				let formattedInput = searchInput.toLowerCase().replace(/\s+/g, "-");
@@ -761,11 +759,7 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 					);
 				}); // This limits the results to a maximum of 6 items
 				let miniSearchItems = searchBarResults.slice(0, 9);
-				if (miniSearchItems.length > 0) {
-					console.log(miniSearchItems);
-				} else {
-					console.log("No results found.");
-				}
+			
 
 				// Here you can add code to display the search results
 
@@ -797,7 +791,6 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 
 				$("#show-all-search").click(function (e) {
 					e.preventDefault();
-					console.log("sy");
 
 					searchNameScreen(
 						document
@@ -813,9 +806,8 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 							section: "single",
 							param: e.target.getAttribute("value"),
 						};
+
 						
-						
-						console.log(stateObject);
 						window.history.pushState(stateObject, "", "item");
 						e.preventDefault();
 						singleItemShow(e.target.getAttribute("value"));
@@ -825,7 +817,6 @@ There are no failed creations by Chong, they simply reveal themselves with time.
 						$(".first-nav").fadeIn();
 						$(".search-popup").fadeOut();
 
-						console.log(e.target.getAttribute("value"));
 					});
 				});
 			}
@@ -899,19 +890,23 @@ function singleItemShow(perfumeId) {
             </div>
         `;
 		let sizeButtons = `<div id="size-buttons" class="size-buttons">`;
+if (selectedPerfume.state !== "5") {
+	sizeButtons += `<button class="size-btn active" data-size="1" data-price="${
+		selectedPerfume.new_price || selectedPerfume.price
+	}"> ${selectedPerfume.size || "Default"} </button>`;
 
-		sizeButtons += `<button class="size-btn active" data-size="1" data-price="${
-			selectedPerfume.new_price || selectedPerfume.price
-		}"> ${selectedPerfume.size || "Default"} </button>`;
+	if (selectedPerfume.size_2nd) {
+		sizeButtons += `<button class="size-btn" data-size="2" data-price="${
+			selectedPerfume.new_price_2nd || selectedPerfume.price_2nd
+		}"> ${selectedPerfume.size_2nd} </button>`;
+	}
+	else {
+		sizedfButton += " <h3>out of stock</h3>";
+	}
 
-		if (selectedPerfume.size_2nd) {
-			sizeButtons += `<button class="size-btn" data-size="2" data-price="${
-				selectedPerfume.new_price_2nd || selectedPerfume.price_2nd
-			}"> ${selectedPerfume.size_2nd} </button>`;
 		}
-
-		sizeButtons += `</div>`;
-
+		
+sizeButtons += `</div>`;
 		const formattedPerfumeName = selectedPerfume.perfume_name.replace(
 			/-/g,
 			" "
@@ -1112,7 +1107,6 @@ function singleItemShow(perfumeId) {
 						section: "single",
 						param: perfumeId,
 					};
-					console.log(stateObject);
 					
 
 					window.history.pushState(stateObject, "", "item");
@@ -1169,11 +1163,9 @@ function singleItemShow(perfumeId) {
 			showCartPopup(formattedPerfumeName, selectedSize + " $", quantity, price);
 			const stateObject = {
 				section: "cart",
-				
 			};
+
 			
-			
-			console.log(stateObject);
 			window.history.pushState(stateObject, "", "cart");
 			showCartScreen();
 		});
@@ -1202,12 +1194,10 @@ function addToCart(perfumeId, perfumeName, size, quantity, price, img) {
 			price: price,
 			img: img,
 		});
-		console.log(cart);
 	}
 
 	// Save the updated cart back to localStorage
 	localStorage.setItem("cart", JSON.stringify(cart));
-	console.log(cart);
 }
 
 function showCartPopup(perfumeName, size, quantity, price) {
@@ -1291,7 +1281,6 @@ function searchNameScreen(term) {
 					section: "single",
 					param: perfumeId,
 				};
-				console.log(stateObject);
 				
 
 				window.history.pushState(stateObject, "", "item");
@@ -1427,7 +1416,6 @@ function searchByBrandScreen(brandId) {
 					section: "single",
 					param: perfumeId,
 				};
-				console.log(stateObject);
 				
 
 				window.history.pushState(stateObject, "", "item");
@@ -1527,12 +1515,10 @@ function showAllBrandsScreen() {
 					section: "brand",
 					param: this.dataset.id,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "brand");
 				searchByBrandScreen(this.dataset.id);
-				
 			});
 		});
 }
@@ -1592,9 +1578,8 @@ function showPerfumesByNote(noteName) {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -1692,17 +1677,17 @@ function showAllNotesScreen() {
             </div>
             <button value="${note.id}">View Perfumes</button>
         `;
-		noteCard.addEventListener("click", () =>{
+		noteCard.addEventListener("click", () => {
 			const stateObject = {
 				section: "note",
 				param: note.name,
 			};
+
 			
-			
-			console.log(stateObject);
 			window.history.pushState(stateObject, "", "note");
-			
-			showPerfumesByNote(note.name)});
+
+			showPerfumesByNote(note.name);
+		});
 		container.appendChild(noteCard);
 	});
 
@@ -1778,14 +1763,13 @@ function showMenPerfumesScreen() {
 		document.querySelectorAll(".view-details").forEach((button) => {
 			button.addEventListener("click", function () {
 				const perfumeId = this.closest(".perfume-card").dataset.id;
-				
+
 				const stateObject = {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -1914,9 +1898,8 @@ function showWomenPerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2043,9 +2026,8 @@ function showUnisexPerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2176,9 +2158,8 @@ function showTestersPerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2309,9 +2290,8 @@ function showUnboxedPerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2442,9 +2422,8 @@ function showRarePerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2585,9 +2564,7 @@ function showCartScreen() {
 	// Event listeners for quantity buttons
 	document.querySelectorAll(".quantity-btn").forEach((button) => {
 		button.addEventListener("click", function (e) {
-			console.log('pressed');
-		
-			
+
 			// showCartScreen();
 			const index = parseInt(this.getAttribute("data-index"));
 			const action = this.getAttribute("data-action");
@@ -2605,9 +2582,8 @@ function showCartScreen() {
 				section: "single",
 				param: perfumeId,
 			};
+
 			
-			
-			console.log(stateObject);
 			window.history.pushState(stateObject, "", "item");
 			singleItemShow(perfumeId);
 		});
@@ -2694,9 +2670,9 @@ function updateCartQuantity(index, action) {
 		if (cart[index].quantity <= 1) {
 			cart.splice(index, 1);
 			showCartScreen();
-			 // Remove the item if quantity is 0 or less
-		}
-		else{		cart[index].quantity--;
+			// Remove the item if quantity is 0 or less
+		} else {
+			cart[index].quantity--;
 		}
 	}
 	localStorage.setItem("cart", JSON.stringify(cart));
@@ -2730,12 +2706,7 @@ function validateInput(name, city, street, phoneNumber) {
 
 function submitOrder(name, city, street, phoneNumber, cart) {
 	// Here, you would typically send the order details to the server
-	console.log("Order submitted:");
-	console.log("Name:", name);
-	console.log("City:", city);
-	console.log("Street:", street);
-	console.log("Phone Number:", phoneNumber);
-	console.log("Cart Items:", cart);
+
 
 	// Clear the cart after submission
 	localStorage.removeItem("cart");
@@ -2823,9 +2794,8 @@ function showNewArrivalsScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -2893,87 +2863,69 @@ let userMovement = [];
 
 window.addEventListener("popstate", function (event) {
 	// event.preventDefault;
-	console.log("back pressed");
+	
 
-	console.log(event.state);
-	console.log(event.state.section);
+
 	// console.log(userMovement[userMovement.length - 2].section);
 
 	switch (event.state.section) {
 		case "main":
-			console.log("you are now on the main page");
+
 			loadHome();
 			// showOnSalePerfumesScreen();
 
 			break;
 
 		case "cart":
-			console.log("You are back on the cart page.");
 			showCartScreen();
 			break;
 		case "allperfumes":
-			console.log("You are back on the all perfumes page.");
 			showAllPerfumesScreen();
 			break;
 		case "men":
-			console.log("You are back on the men perfumes page.");
 			showMenPerfumesScreen();
 			break;
 		case "women":
-			console.log("You are back on the women perfumes page.");
 			showWomenPerfumesScreen();
 			break;
 		case "unisex":
-			console.log("You are back on the unisex perfumes page.");
 			showUnisexPerfumesScreen();
 			break;
 		case "testers":
-			console.log("You are back on the testers perfumes page.");
 			showTestersPerfumesScreen();
 			break;
 		case "unboxed":
-			console.log("You are back on the unboxed perfumes page.");
 			showUnboxedPerfumesScreen();
 			break;
 		case "rares":
-			console.log("You are back on the rares page.");
 			showRarePerfumesScreen();
 			break;
 		case "new arrival":
-			console.log("You are back on the new arrival page.");
 			showNewArrivalsScreen();
 			break;
 		case "best-sellers":
-			console.log("You are back on the best sellers page.");
 			showOnSalePerfumesScreen();
 			break;
 		case "all-perfumes":
-			console.log("You are back on the all perfumes page.");
 			showAllPerfumesScreen();
 			break;
 		case "brands":
-			console.log("You are back on the Services page.");
 			showAllBrandsScreen();
 			break;
 		case "notes":
-			console.log("You are back on the Services page.");
 			showAllNotesScreen();
 			break;
 		case "single":
-			console.log("You are back on the item" +event.state.param+"page.");
 			singleItemShow(event.state.param);
 			break;
 		case "note":
-			console.log("You are back on the note " +event.state.param+"page.");
 			showPerfumesByNote(event.state.param);
 			break;
 		case "brand":
-			console.log("You are back on the brand " +event.state.param+"page.");
 			searchByBrandScreen(event.state.param);
 			break;
-			
+
 		default:
-			console.log("Unknown page.");
 	}
 });
 
@@ -3066,9 +3018,8 @@ function showOnSalePerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
@@ -3199,9 +3150,8 @@ function showAllPerfumesScreen() {
 					section: "single",
 					param: perfumeId,
 				};
+
 				
-				
-				console.log(stateObject);
 				window.history.pushState(stateObject, "", "item");
 				singleItemShow(perfumeId);
 			});
